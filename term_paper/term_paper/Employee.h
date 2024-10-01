@@ -4,10 +4,12 @@
 #include <string>
 #include <iostream>
 #include <array>
+#include <ctime>
 
 class Employee {
 	std::array<std::string, 3> full_name;
 	int salary;
+	tm birthday;
 
 protected:
 	Employee(std::string, std::string, std::string, int);
@@ -25,5 +27,7 @@ protected:
 	std::array<std::string, 3> get_fullname();
 	//get salary
 	int get_salary();
-};
 
+	int ch_birthday(std::string);
+	tm get_birthday();
+};
