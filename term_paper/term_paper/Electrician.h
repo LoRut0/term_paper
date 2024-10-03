@@ -4,6 +4,13 @@
 class Electrician :
     public Employee
 {
+    //Full Name
+    std::array<std::string, 3> full_name;
+    //Salary
+    int salary;
+    //Birthday
+    tm birthday;
+
     int category;
     std::vector<std::string> tools;
 

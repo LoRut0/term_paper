@@ -5,29 +5,27 @@
 #include <iostream>
 #include <array>
 #include <ctime>
+#include <getch_input.h>
+
 
 class Employee {
-	std::array<std::string, 3> full_name;
-	int salary;
-	tm birthday;
-
-protected:
-	Employee(std::string, std::string, std::string, int);
-
+public:
 	//change name
-	void ch_name(std::string);
+	virtual void ch_name(std::string) = 0;
 	//change surname
-	void ch_surname(std::string);
+	virtual void ch_surname(std::string) = 0;
 	//change partonymic
-	void ch_patronymic(std::string);
+	virtual void ch_patronymic(std::string) = 0;
 	//change salary
-	void ch_salary(int);
+	virtual void ch_salary(int) = 0;
 
 	//get full name in array: 0-name, 1-surname, 2-patronymic
-	std::array<std::string, 3> get_fullname();
+	virtual std::array<std::string, 3> get_fullname() = 0;
 	//get salary
-	int get_salary();
+	virtual int get_salary() = 0;
 
-	int ch_birthday(std::string);
-	tm get_birthday();
+	//Change bitrthday format(dd.mm.yyyy)
+	virtual void ch_birthday() = 0;
+	//get birthday (tm struct)
+	virtual tm get_birthday() = 0;
 };

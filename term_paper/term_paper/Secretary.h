@@ -8,7 +8,12 @@
 class Secretary :
     public Employee
 {
-
+    //Full Name
+    std::array<std::string, 3> full_name;
+    //Salary
+    int salary;
+    //Birthday
+    tm birthday;
 
 public:
     Secretary(std::string, std::string, std::string, int);

@@ -1,45 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Director">
-    <Position X="7.5" Y="5.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAABAAAAAAAAAAAAAQIAAIAAAAAAAQAAAAAAAABCg=</HashCode>
-      <FileName>Director.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Employee">
-    <Position X="7.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>IAAAEQAECAAgAgAAAAAAAAAACAAAAAAABAAAAAAAAAA=</HashCode>
-      <FileName>Employee.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Accountant">
-    <Position X="5.5" Y="5.25" Width="1.5" />
+    <Position X="5.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAQAAAiAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAFQAUCQAnAgAAAAAAAIgAAAAAAIAEBAAAAAAAAAA=</HashCode>
       <FileName>Accountant.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Guard">
-    <Position X="10" Y="5.25" Width="1.5" />
+  <Class Name="Director">
+    <Position X="7.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAAAAAAAAAAAABAAAAAAAAAAKAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Guard.h</FileName>
+      <HashCode>IAAAARAAAAAgAQAAIAAQIAgIAAAAAAAQAAAAAAAAACg=</HashCode>
+      <FileName>Director.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Secretary">
-    <Position X="3.25" Y="5.25" Width="1.5" />
+  <Class Name="Electrician" Collapsed="true">
+    <Position X="12" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQABAAAAAAAAAAAAAAAEAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAASAAAAAgFAAAAAAAAAgAAABAAAgAAAAIAAAAAAA=</HashCode>
+      <FileName>Electrician.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Employee">
+    <Position X="9.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAEAAECAAEAgAAAAAAAAAAAAAAAAAEBAAAAAAAAAA=</HashCode>
+      <FileName>Employee.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Secretary" Collapsed="true">
+    <Position X="10" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQABAAAgAAAAAAAAAAgEAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Secretary.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Electrician">
-    <Position X="12.25" Y="5.25" Width="1.5" />
+  <Class Name="Guard" Collapsed="true">
+    <Position X="14.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAACAAAAAAFAAAAAAAAAAAAABAAAgAAAAIAAAAAAA=</HashCode>
-      <FileName>Electrician.h</FileName>
+      <HashCode>EAAAAQAAAAAgABAAAAAAAAgAKAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Guard.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
