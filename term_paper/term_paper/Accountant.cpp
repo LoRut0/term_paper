@@ -1,22 +1,26 @@
 #include "Accountant.h"
 
-void Accountant::ch_name(std::string)
+void Accountant::ch_name()
 {
+	std::cout<<"Enter name: ";
 	full_name[0] = name_input(25);
 };
 
-void  Accountant::ch_surname(std::string)
+void  Accountant::ch_surname()
 {
+	std::cout << "Enter surname: ";
 	full_name[1] = name_input(25);
 };
 
-void Accountant::ch_patronymic(std::string)
+void Accountant::ch_patronymic()
 {
+	std::cout << "Enter patronymic: ";
 	full_name[2] = name_input(25);
 };
 
-void Accountant::ch_salary(int)
+void Accountant::ch_salary()
 {
+	std::cout << "Enter salary: "; 
 	salary = int_input(1);
 };
 
@@ -60,4 +64,12 @@ void Accountant::ch_birthday()
 tm Accountant::get_birthday()
 {
 	return birthday;
+};
+
+Accountant::Accountant() 
+{
+	full_name[0] = name;
+	full_name[1] = surname;
+	full_name[2] = patronymic;
+	salary = slry;
 };
