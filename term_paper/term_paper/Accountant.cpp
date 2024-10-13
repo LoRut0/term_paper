@@ -1,27 +1,30 @@
 #include "Accountant.h"
+#include "inputlib.h"
+
+//base
 
 void Accountant::ch_name()
 {
 	std::cout<<"Enter name: ";
-	full_name[0] = name_input(25);
+	full_name[0] = Input::name(25);
 };
 
 void  Accountant::ch_surname()
 {
 	std::cout << "Enter surname: ";
-	full_name[1] = name_input(25);
+	full_name[1] = Input::name(25);
 };
 
 void Accountant::ch_patronymic()
 {
 	std::cout << "Enter patronymic: ";
-	full_name[2] = name_input(25);
+	full_name[2] = Input::name(25);
 };
 
 void Accountant::ch_salary()
 {
 	std::cout << "Enter salary: "; 
-	salary = int_input(1);
+	salary = Input::int_(10);
 };
 
 
@@ -37,14 +40,11 @@ int Accountant::get_salary()
 
 void Accountant::ch_birthday()
 {
-	// Получаем текущее время
-	std::time_t t = std::time(nullptr);
-	// Преобразуем его в структуру tm
-	std::tm* now = std::localtime(&t);
-	// Получаем год и приводим его к формату, начиная с 1900
-	int current_year = now->tm_year + 1900;
+	auto now = std::chrono::system_clock::now();
+	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
+	int current_year = static_cast<int>(chrono_current_year);
 
-	std::string temp = date_input(1900, current_year);
+	std::string temp = Input::date(1900, current_year);
 	std::string date[3];
 
 	date[0].push_back(temp[0]);
@@ -56,20 +56,167 @@ void Accountant::ch_birthday()
 	date[2].push_back(temp[8]);
 	date[2].push_back(temp[9]);
 
-	birthday.tm_year = std::stoi(date[2]);
-	birthday.tm_mon = std::stoi(date[1]);
-	birthday.tm_mday = std::stoi(date[0]);
+	birthday[0] = std::stoi(date[2]);
+	birthday[1] = std::stoi(date[1]);
+	birthday[2] = std::stoi(date[0]);
 };
 
-tm Accountant::get_birthday()
+std::array<int, 3> Accountant::get_birthday()
 {
 	return birthday;
 };
 
-Accountant::Accountant() 
+Accountant::Accountant(std::string name, std::string surname, std::string patronymic, int slry, std::array<int, 5> base_slry, std::array<double, 5> slry_rate)
 {
 	full_name[0] = name;
 	full_name[1] = surname;
 	full_name[2] = patronymic;
 	salary = slry;
+
+	base_salary = base_slry;
+	salary_rate = slry_rate;
+	birthday = { 0,0,0 };
 };
+
+Accountant::Accountant()
+{
+	full_name[0] = "name";
+	full_name[1] = "surname";
+	full_name[2] = "patronymic";
+	salary = -1;
+
+	base_salary = { 0,0,0,0,0 };
+	salary_rate = { 1,1,1,1,1 };
+	birthday = { 0,0,0 };
+};
+//base
+
+std::array<double, 5> Accountant::get_salary_rate() {
+	return salary_rate;
+}
+
+void Accountant::ch_salary_rate() {
+	bool flag(true);
+	while (flag)
+	{
+		system("cls");
+		std::cout << "Ставки по должностям: " << std::endl;
+		std::cout << "(1) Директор: " << salary_rate[0] << std::endl;
+		std::cout << "(2) Бухгалтер: " << salary_rate[1] << std::endl;
+		std::cout << "(3) Секретарь: " << salary_rate[2] << std::endl;
+		std::cout << "(4) Охранник: " << salary_rate[3] << std::endl;
+		std::cout << "(5) Электрик: " << salary_rate[4] << std::endl;
+
+		std::cout << "Для выхода нажмите Esc\nВыберите должность, ставку которой вы хотите изменить" << std::endl;
+		switch (Input::choice(1, 5))
+		{
+		case 1: {
+			std::cout << "Введите новую ставку для Директора: ";
+			double new_rate = Input::double_(0.1, 100000);
+			if (new_rate == DBL_MIN) break;
+			salary_rate[0] = new_rate;
+			break;
+		}
+		case 2: {
+			std::cout << "Введите новую ставку для Бухгалтера: ";
+			double new_rate = Input::double_(0.1, 100000);
+			if (new_rate == DBL_MIN) break;
+			salary_rate[1] = new_rate;
+			break;
+		}
+		case 3: {
+			std::cout << "Введите новую ставку для Секретаря: ";
+			double new_rate = Input::double_(0.1, 100000);
+			if (new_rate == DBL_MIN) break;
+			salary_rate[2] = new_rate;
+			break;
+		}
+		case 4: {
+			std::cout << "Введите новую ставку для Охранника: ";
+			double new_rate = Input::double_(0.1, 100000);
+			if (new_rate == DBL_MIN) break;
+			salary_rate[3] = new_rate;
+			break;
+		}
+		case 5: {
+			std::cout << "Введите новую ставку для Электрика: ";
+			double new_rate = Input::double_(0.1, 100000);
+			if (new_rate == DBL_MIN) break;
+			salary_rate[4] = new_rate;
+			break;
+		}
+		case -1:
+			flag = false;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+std::array<int, 5> Accountant::get_base_salary() {
+	return base_salary;
+}
+
+void Accountant::ch_base_salary() {
+	bool flag(true);
+	while (flag)
+	{
+		system("cls");
+		std::cout << "Оклады по должностям: " << std::endl;
+		std::cout << "(1) Директор: " << salary_rate[0] << std::endl;
+		std::cout << "(2) Бухгалтер: " << salary_rate[1] << std::endl;
+		std::cout << "(3) Секретарь: " << salary_rate[2] << std::endl;
+		std::cout << "(4) Охранник: " << salary_rate[3] << std::endl;
+		std::cout << "(5) Электрик: " << salary_rate[4] << std::endl;
+
+		std::cout << "Для выхода нажмите Esc\nВыберите должность, оклад которой вы хотите изменить" << std::endl;
+		switch (Input::choice(1, 5))
+		{
+		case 1: {
+			std::cout << "Введите новый оклад для Директора: ";
+			int new_base = Input::int_(1, 10000000);
+			if (new_base == INT_MIN) break;
+			base_salary[0] = new_base;
+			break;
+		}
+		case 2: {
+			std::cout << "Введите новый оклад для Бухгалтера: ";
+			int new_base = Input::int_(1, 10000000);
+			if (new_base == INT_MIN) break;
+			base_salary[1] = new_base;
+			break;
+		}
+		case 3: {
+			std::cout << "Введите новый оклад для Секретаря: ";
+			int new_base = Input::int_(1, 10000000);
+			if (new_base == INT_MIN) break;
+			base_salary[2] = new_base;
+			break;
+		}
+		case 4: {
+			std::cout << "Введите новый оклад для Охранника: ";
+			int new_base = Input::int_(1, 10000000);
+			if (new_base == INT_MIN) break;
+			base_salary[3] = new_base;
+			break;
+		}
+		case 5: {
+			std::cout << "Введите новый оклад для Электрика: ";
+			int new_base = Input::int_(1, 10000000);
+			if (new_base == INT_MIN) break;
+			base_salary[4] = new_base;
+			break;
+		}
+		case -1:
+			flag = false;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+double Accountant::salary_calculation(int rate, int base) {
+	return salary_rate[rate] * base_salary[base];
+}

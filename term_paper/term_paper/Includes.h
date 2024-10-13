@@ -12,4 +12,4 @@
 #include "Secretary.h"
 #include "Electrician.h"
 #include "Guard.h"
-#include <getch_input.h>
+#include "inputlib.h"

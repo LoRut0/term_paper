@@ -5,8 +5,6 @@ VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "term_paper", "term_paper\term_paper.vcxproj", "{250DD362-28E1-4C59-B0C4-B72C214E1396}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "..\..\..\Users\loruto\Desktop\MPEI\Programming\3rd Semester\test\test\test.vcxproj", "{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,14 +21,6 @@ Global
 		{250DD362-28E1-4C59-B0C4-B72C214E1396}.Release|x64.Build.0 = Release|x64
 		{250DD362-28E1-4C59-B0C4-B72C214E1396}.Release|x86.ActiveCfg = Release|Win32
 		{250DD362-28E1-4C59-B0C4-B72C214E1396}.Release|x86.Build.0 = Release|Win32
-		{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}.Debug|x64.ActiveCfg = Debug|x64
-		{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}.Debug|x64.Build.0 = Debug|x64
-		{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}.Debug|x86.ActiveCfg = Debug|Win32
-		{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}.Debug|x86.Build.0 = Debug|Win32
-		{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}.Release|x64.ActiveCfg = Release|x64
-		{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}.Release|x64.Build.0 = Release|x64
-		{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}.Release|x86.ActiveCfg = Release|Win32
-		{D4D0BF99-3DD1-4528-A3B2-BB33C2FBDFF9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

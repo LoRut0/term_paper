@@ -2,5 +2,7 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    setlocale(LC_ALL, "rus");
+    Director director("Игорь", "Пеганов", "Николаевич", 200);
+    director.print_employers();
 }

@@ -4,28 +4,35 @@
 #include <string>
 #include <iostream>
 #include <array>
-#include <ctime>
-#include <getch_input.h>
+#include <chrono>
+#include "inputlib.h"
 
 
 class Employee {
 public:
+//CHANGERS
 	//change name
-	virtual void ch_name(std::string) = 0;
+	virtual void ch_name() = 0;
 	//change surname
-	virtual void ch_surname(std::string) = 0;
+	virtual void ch_surname() = 0;
 	//change partonymic
-	virtual void ch_patronymic(std::string) = 0;
-	//change salary
-	virtual void ch_salary(int) = 0;
+	virtual void ch_patronymic() = 0;
 
-	//get full name in array: 0-name, 1-surname, 2-patronymic
-	virtual std::array<std::string, 3> get_fullname() = 0;
-	//get salary
-	virtual int get_salary() = 0;
+	//change salary
+	virtual void ch_salary() = 0;
 
 	//Change bitrthday format(dd.mm.yyyy)
 	virtual void ch_birthday() = 0;
+//CHANGERS
+
+//GETTERS
+	//get full name in array: 0-name, 1-surname, 2-patronymic
+	virtual std::array<std::string, 3> get_fullname() = 0;
+
+	//get salary
+	virtual int get_salary() = 0;
+
 	//get birthday (tm struct)
-	virtual tm get_birthday() = 0;
+	virtual std::array<int, 3> get_birthday() = 0;
+//GETTERS 
 };

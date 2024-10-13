@@ -1,1 +1,113 @@
 #include "Electrician.h"
+
+//base
+
+void Electrician::ch_name()
+{
+	std::cout << "Enter name: ";
+	full_name[0] = Input::name(25);
+};
+
+void  Electrician::ch_surname()
+{
+	std::cout << "Enter surname: ";
+	full_name[1] = Input::name(25);
+};
+
+void Electrician::ch_patronymic()
+{
+	std::cout << "Enter patronymic: ";
+	full_name[2] = Input::name(25);
+};
+
+void Electrician::ch_salary()
+{
+	std::cout << "Enter salary: ";
+	salary = Input::int_(10);
+};
+
+
+std::array<std::string, 3> Electrician::get_fullname()
+{
+	return full_name;
+};
+
+int Electrician::get_salary()
+{
+	return salary;
+};
+
+void Electrician::ch_birthday()
+{
+	auto now = std::chrono::system_clock::now();
+	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
+	int current_year = static_cast<int>(chrono_current_year);
+
+	std::string temp = Input::date(1900, current_year);
+	std::string date[3];
+
+	date[0].push_back(temp[0]);
+	date[0].push_back(temp[1]);
+	date[1].push_back(temp[3]);
+	date[1].push_back(temp[4]);
+	date[2].push_back(temp[6]);
+	date[2].push_back(temp[7]);
+	date[2].push_back(temp[8]);
+	date[2].push_back(temp[9]);
+
+	birthday[0] = std::stoi(date[2]);
+	birthday[1] = std::stoi(date[1]);
+	birthday[2] = std::stoi(date[0]);
+};
+
+std::array<int, 3> Electrician::get_birthday()
+{
+	return birthday;
+};
+
+Electrician::Electrician(std::string name, std::string surname, std::string patronymic, int slry)
+{
+	full_name[0] = name;
+	full_name[1] = surname;
+	full_name[2] = patronymic;
+	salary = slry;
+
+	birthday = { 0,0,0 };
+	category = 0;
+	height_cat = 0;
+};
+
+Electrician::Electrician()
+{
+	full_name[0] = "name";
+	full_name[1] = "surname";
+	full_name[2] = "patronymic";
+	salary = -1;
+
+	birthday = { 0,0,0 };
+	category = 0;
+	height_cat = 0;
+};
+//base
+
+int Electrician::get_category() {
+	return category;
+}
+
+void Electrician::ch_category() {
+	std::cout << "Для отмены нажмите esc\nВведите разряд электрика (1-6): ";
+	int new_cat = Input::int_(1, 6);
+	if (new_cat == INT_MIN) return;
+	category = new_cat;
+}
+
+int Electrician::get_height_cat() {
+	return height_cat;
+}
+
+void Electrician::ch_height_cat() {
+	std::cout << "Для отмены нажмите esc\nВведите группу допуска электрика на высотные работы (1-3): ";
+	int new_height_cat = Input::int_(1, 3);
+	if (new_height_cat == INT_MIN) return;
+	height_cat = new_height_cat;
+}

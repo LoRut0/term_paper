@@ -9,18 +9,53 @@ class Electrician :
     //Salary
     int salary;
     //Birthday
-    tm birthday;
+    std::array<int, 3> birthday;
 
+    //category of electrician
     int category;
-    std::vector<std::string> tools;
+    //Permission category for work at height
+    int height_cat;
 
 public:
-    Electrician(std::string, std::string, std::string, int);
+//BASE
+//CHANGERS
+    //change name
+    void ch_name() override;
+    //change surname
+    void ch_surname() override;
+    //change partonymic
+    void ch_patronymic() override;
 
+    //change salary
+    void ch_salary() override;
+
+    //Change bitrthday format(dd.mm.yyyy)
+    void ch_birthday() override;
+//CHANGERS
+
+//GETTERS
+        //get full name in array: 0-name, 1-surname, 2-patronymic
+    std::array<std::string, 3> get_fullname() override;
+
+    //get salary
+    int get_salary() override;
+
+    //get birthday (tm struct)
+    std::array<int, 3> get_birthday() override;
+//GETTERS
+
+    Electrician(std::string name, std::string surname, std::string patronymic, int slry);
+    Electrician();
+//BASE
+    
+    //get category
     int get_category();
-    void ch_category(int);
+    //change catregory
+    void ch_category();
 
-    std::vector<std::string> get_tools();
-    void ch_tools();
+    //get height category
+    int get_height_cat();
+    //change height category
+    void ch_height_cat();
 };
 
