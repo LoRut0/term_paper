@@ -20,10 +20,9 @@ void Guard::ch_patronymic()
 	full_name[2] = Input::name(25);
 };
 
-void Guard::ch_salary()
+void Guard::ch_salary(double slry)
 {
-	std::cout << "Enter salary: ";
-	salary = Input::int_(10);
+	salary = slry;
 };
 
 
@@ -65,14 +64,14 @@ std::array<int, 3> Guard::get_birthday()
 	return birthday;
 };
 
-Guard::Guard(std::string name, std::string surname, std::string patronymic, int slry)
+Guard::Guard(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday)
 {
 	full_name[0] = name;
 	full_name[1] = surname;
 	full_name[2] = patronymic;
-	salary = slry;
+	salary = 1;
 
-	birthday = { 0,0,0 };
+	birthday = input_birthday;
 };
 
 Guard::Guard()

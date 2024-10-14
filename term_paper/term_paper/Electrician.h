@@ -13,8 +13,8 @@ class Electrician :
 
     //category of electrician
     int category;
-    //Permission category for work at height
-    int height_cat;
+    ////Permission category for work at height
+    //int height_cat;
 
 public:
 //BASE
@@ -27,7 +27,7 @@ public:
     void ch_patronymic() override;
 
     //change salary
-    void ch_salary() override;
+    void ch_salary(double slry) override;
 
     //Change bitrthday format(dd.mm.yyyy)
     void ch_birthday() override;
@@ -44,7 +44,7 @@ public:
     std::array<int, 3> get_birthday() override;
 //GETTERS
 
-    Electrician(std::string name, std::string surname, std::string patronymic, int slry);
+    Electrician(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, int cat);
     Electrician();
 //BASE
     
@@ -53,9 +53,9 @@ public:
     //change catregory
     void ch_category();
 
-    //get height category
-    int get_height_cat();
-    //change height category
-    void ch_height_cat();
+    ////get height category
+    //int get_height_cat();
+    ////change height category
+    //void ch_height_cat();
 };
 

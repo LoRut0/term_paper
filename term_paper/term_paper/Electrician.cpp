@@ -20,10 +20,9 @@ void Electrician::ch_patronymic()
 	full_name[2] = Input::name(25);
 };
 
-void Electrician::ch_salary()
+void Electrician::ch_salary(double slry)
 {
-	std::cout << "Enter salary: ";
-	salary = Input::int_(10);
+	salary = slry;
 };
 
 
@@ -65,16 +64,16 @@ std::array<int, 3> Electrician::get_birthday()
 	return birthday;
 };
 
-Electrician::Electrician(std::string name, std::string surname, std::string patronymic, int slry)
+Electrician::Electrician(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, int cat)
 {
 	full_name[0] = name;
 	full_name[1] = surname;
 	full_name[2] = patronymic;
-	salary = slry;
+	salary = 1;
 
-	birthday = { 0,0,0 };
-	category = 0;
-	height_cat = 0;
+	birthday = input_birthday;
+	category = cat;
+	//height_cat = 0;
 };
 
 Electrician::Electrician()
@@ -101,13 +100,13 @@ void Electrician::ch_category() {
 	category = new_cat;
 }
 
-int Electrician::get_height_cat() {
-	return height_cat;
-}
-
-void Electrician::ch_height_cat() {
-	std::cout << "Для отмены нажмите esc\nВведите группу допуска электрика на высотные работы (1-3): ";
-	int new_height_cat = Input::int_(1, 3);
-	if (new_height_cat == INT_MIN) return;
-	height_cat = new_height_cat;
-}
+//int Electrician::get_height_cat() {
+//	return height_cat;
+//}
+//
+//void Electrician::ch_height_cat() {
+//	std::cout << "Для отмены нажмите esc\nВведите группу допуска электрика на высотные работы (1-3): ";
+//	int new_height_cat = Input::int_(1, 3);
+//	if (new_height_cat == INT_MIN) return;
+//	height_cat = new_height_cat;
+//}

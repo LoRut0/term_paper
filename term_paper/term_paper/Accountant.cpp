@@ -21,10 +21,9 @@ void Accountant::ch_patronymic()
 	full_name[2] = Input::name(25);
 };
 
-void Accountant::ch_salary()
-{
-	std::cout << "Enter salary: "; 
-	salary = Input::int_(10);
+void Accountant::ch_salary(double slry)
+{ 
+	salary = slry;
 };
 
 
@@ -66,16 +65,22 @@ std::array<int, 3> Accountant::get_birthday()
 	return birthday;
 };
 
-Accountant::Accountant(std::string name, std::string surname, std::string patronymic, int slry, std::array<int, 5> base_slry, std::array<double, 5> slry_rate)
+Accountant::Accountant(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, std::array<int, 5> base_slry, std::array<double, 5> slry_rate,
+	std::vector<Electrician>* electricians, std::vector<Guard>* guards, Secretary* secretary, Director* director)
 {
 	full_name[0] = name;
 	full_name[1] = surname;
 	full_name[2] = patronymic;
-	salary = slry;
+	salary = 1;
 
 	base_salary = base_slry;
 	salary_rate = slry_rate;
-	birthday = { 0,0,0 };
+	birthday = input_birthday;
+
+	this->electricians = electricians;
+	this->guards = guards;
+	this->secretary = secretary;
+	this->director = director;
 };
 
 Accountant::Accountant()
@@ -217,6 +222,24 @@ void Accountant::ch_base_salary() {
 	}
 }
 
-double Accountant::salary_calculation(int rate, int base) {
-	return salary_rate[rate] * base_salary[base];
+void Accountant::salary_calculation() {
+	director->ch_salary(base_salary[0] * salary_rate[0]);
+	this->ch_salary(base_salary[1] * salary_rate[1]);
+	secretary->ch_salary(base_salary[2] * salary_rate[2]);
+	for(Guard guard : *guards) guard.ch_salary(base_salary[3] * salary_rate[3]);
+	for(Electrician electrician : *electricians) electrician.ch_salary(base_salary[3] * salary_rate[3]);
+	return;
+}
+
+double Accountant::average_salary() {
+	double sum;
+	int num_of_emps(3);
+	sum += director->get_salary();
+	sum += this->get_salary();
+	sum += secretary->get_salary();
+	for (Guard guard : *guards) sum += guard.get_salary();
+	num_of_emps += (*guards).size();
+	for (Electrician electrician : *electricians) sum += electrician.get_salary();
+	num_of_emps += (*electricians).size();
+	return sum / num_of_emps;
 }

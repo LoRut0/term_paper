@@ -20,10 +20,9 @@ void Director::ch_patronymic()
 	full_name[2] = Input::name(25);
 };
 
-void Director::ch_salary()
+void Director::ch_salary(double slry)
 {
-	std::cout << "Enter salary: ";
-	salary = Input::int_(10);
+	salary = slry;
 };
 
 
@@ -65,20 +64,22 @@ std::array<int, 3> Director::get_birthday()
 	return birthday;
 };
 
-Director::Director(std::string name, std::string surname, std::string patronymic, int slry)
+Director::Director(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, std::string comp_name)
 {
 	full_name[0] = name;
 	full_name[1] = surname;
 	full_name[2] = patronymic;
-	salary = slry;
+	salary = 1;
 	
-	birthday = { 0,0,0 };
+	birthday = input_birthday;
+	company_name = comp_name;
 
 	//initialization of pointers
 	electricians = new std::vector<Electrician>;
 	guards = new std::vector<Guard>;
 	secretary = new Secretary;
 	accountant = new Accountant;
+	self = this;
 };
 
 Director::~Director() 

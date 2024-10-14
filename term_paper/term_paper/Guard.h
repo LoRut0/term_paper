@@ -25,7 +25,7 @@ public:
     void ch_patronymic() override;
 
     //change salary
-    void ch_salary() override;
+    void ch_salary(double slry) override;
 
     //Change bitrthday format(dd.mm.yyyy)
     void ch_birthday() override;
@@ -42,7 +42,7 @@ public:
     std::array<int, 3> get_birthday() override;
 //GETTERS
 
-    Guard(std::string name, std::string surname, std::string patronymic, int slry);
+    Guard(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday);
     Guard();
 //BASE
 

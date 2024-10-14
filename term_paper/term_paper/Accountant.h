@@ -1,8 +1,9 @@
 #pragma once
-
-
 #include "Employee.h"
-
+#include "Electrician.h"
+#include "Director.h"
+#include "Secretary.h"
+#include "Guard.h"
 
 class Accountant :
     public Employee
@@ -10,7 +11,7 @@ class Accountant :
     //Full Name
     std::array<std::string, 3> full_name;
     //Salary
-    int salary;
+    double salary;
     //Birthday
     std::array<int, 3> birthday;
 
@@ -21,6 +22,17 @@ class Accountant :
     0 - Director, 1 - Accountant, 2 - Secretary, 3 - Security, 4 - Electrician*/
     std::array<double, 5> salary_rate;
 
+    //pointer to vector with ellectricians
+    std::vector<Electrician>* electricians;
+    //pointer to vector with guards
+    std::vector<Guard>* guards;
+    //pointer to Secretary
+    Secretary* secretary;
+    //pointer to Director
+    Director* director;
+
+    //fuction that changes salaries of employees
+    void salary_calculation();
 public:
 //BASE
 //CHANGERS
@@ -32,10 +44,12 @@ public:
     void ch_patronymic() override;
 
     //change salary
-    void ch_salary() override;
+    void ch_salary(double slry) override;
 
     //Change bitrthday format(dd.mm.yyyy)
     void ch_birthday() override;
+
+    double average_salary();
 //CHANGERS
     
 //GETTERS
@@ -49,7 +63,8 @@ public:
     std::array<int, 3> get_birthday() override;
 //GETTERS
 
-    Accountant(std::string name, std::string surname, std::string patronymic, int slry, std::array<int, 5> base_slry, std::array<double, 5> slry_rate);
+    Accountant(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, std::array<int, 5> base_slry, std::array<double, 5> slry_rate, 
+        std::vector<Electrician>* electricians, std::vector<Guard>* guards, Secretary* secretary, Director* director);
     Accountant();
 //BASE
 
@@ -62,8 +77,5 @@ public:
     void ch_base_salary();
     //get base salary
     std::array<int, 5> get_base_salary();
-
-    //fuction that multiplicates returns salary_rate * base_salary
-    double salary_calculation(int rate, int base);
 };
 

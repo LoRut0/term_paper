@@ -20,10 +20,9 @@ void Secretary::ch_patronymic()
 	full_name[2] = Input::name(25);
 };
 
-void Secretary::ch_salary()
+void Secretary::ch_salary(double slry)
 {
-	std::cout << "Enter salary: ";
-	salary = Input::int_(10);
+	salary = slry;
 };
 
 
@@ -65,12 +64,14 @@ std::array<int, 3> Secretary::get_birthday()
 	return birthday;
 };
 
-Secretary::Secretary(std::string name, std::string surname, std::string patronymic, int slry, Accountant* accountant, std::vector<Guard>* guards, std::vector<Electrician>* electricians)
+Secretary::Secretary(std::string name, std::string surname, std::string patronymic, std::vector<std::string> langs, Accountant* accountant, std::vector<Guard>* guards, std::vector<Electrician>* electricians)
 {
 	full_name[0] = name;
 	full_name[1] = surname;
 	full_name[2] = patronymic;
-	salary = slry;
+	salary = 1;
+	
+	languages = langs;
 
 	this->accountant = accountant;
 	this->electricians = electricians;

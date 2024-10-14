@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Accountant.cpp" />
+    <ClCompile Include="ControlMenu.cpp" />
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Electrician.cpp" />
     <ClCompile Include="Employee.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Accountant.h" />
+    <ClInclude Include="ControlMenu.h" />
     <ClInclude Include="Director.h" />
     <ClInclude Include="Electrician.h" />
     <ClInclude Include="Employee.h" />

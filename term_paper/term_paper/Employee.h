@@ -19,7 +19,7 @@ public:
 	virtual void ch_patronymic() = 0;
 
 	//change salary
-	virtual void ch_salary() = 0;
+	virtual void ch_salary(double slry) = 0;
 
 	//Change bitrthday format(dd.mm.yyyy)
 	virtual void ch_birthday() = 0;

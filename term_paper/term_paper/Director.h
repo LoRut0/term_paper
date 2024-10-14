@@ -27,6 +27,8 @@ class Director :
 	Secretary* secretary;
 	//pointer to Accountant
 	Accountant* accountant;
+	//pointer to self
+	Director* self;
 
 	//company name
 	std::string company_name;
@@ -42,7 +44,7 @@ public:
 	void ch_patronymic() override;
 
 	//change salary
-	void ch_salary() override;
+	void ch_salary(double slry) override;
 
 	//Change bitrthday format(dd.mm.yyyy)
 	void ch_birthday() override;
@@ -59,9 +61,9 @@ public:
 	std::array<int, 3> get_birthday() override;
 //GETTERS
 
-	Director(std::string name, std::string surname, std::string patronymic, int slry);
-
+	Director(std::string name, std::string surname, std::string patronymic, std::array<int, 3> birthday, std::string comp_name);
 	~Director();
+
 //BASE
 
 	//print employers

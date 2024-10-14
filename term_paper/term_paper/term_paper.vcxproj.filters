@@ -48,6 +48,9 @@
     <ClCompile Include="private.cpp">
       <Filter>Source Files\inputlib</Filter>
     </ClCompile>
+    <ClCompile Include="ControlMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Includes.h">
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="private.h">
       <Filter>Header Files\inputlib</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlMenu.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

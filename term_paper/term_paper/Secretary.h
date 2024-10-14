@@ -37,7 +37,7 @@ public:
     void ch_patronymic() override;
 
     //change salary
-    void ch_salary() override;
+    void ch_salary(double slry) override;
 
     //Change bitrthday format(dd.mm.yyyy)
     void ch_birthday() override;
@@ -54,7 +54,7 @@ public:
     std::array<int, 3> get_birthday() override;
 //GETTERS
 
-    Secretary(std::string name, std::string surname, std::string patronymic, int slry, Accountant* accountant, std::vector<Guard>* guards, std::vector<Electrician>* electricians);
+    Secretary(std::string name, std::string surname, std::string patronymic, std::vector<std::string> langs, Accountant* accountant, std::vector<Guard>* guards, std::vector<Electrician>* electricians);
     Secretary();
 //BASE
     
