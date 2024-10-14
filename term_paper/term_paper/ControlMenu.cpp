@@ -142,7 +142,7 @@ void ControlMenu::read_from_file(){
                     if (str[n] == ',' or str[n] == ';') break;
                     temp.push_back(str[n]);
                 }
-                langs.push_back(temp);
+                if (temp.size() != 0) langs.push_back(temp);
             }
             Secretary secretary(full_name, birthday, langs);
             directors_n_companies.back()->hire_employers(secretary);
@@ -307,7 +307,8 @@ void ControlMenu::start() {
                         std::cout << director->get_company_name() << std::endl;
                         std::cout << "Директор: "; print_name(director->get_fullname()); print_birthday(director->get_birthday()); std::cout << "\n";
                         std::cout << "Меню:\n(1) Вывести сотрудников\n(2) Уволить сотрудников\n(3) Нанять сотрудников\n(4) Сменить название компании\n";
-                        switch (Input::choice(1, 4))
+                        std::cout << "(5) Сменить имя\n(6) Сменить фамилию\n(7) Сменить отчество\n";
+                        switch (Input::choice(1, 7))
                         {
                         case 1:
                             director->print_employers();
@@ -326,6 +327,15 @@ void ControlMenu::start() {
                         case 4:
                             director->change_company_name();
                             system("pause");
+                            break;
+                        case 5:
+                            director->ch_name();
+                            break;
+                        case 6:
+                            director->ch_surname();
+                            break;
+                        case 7:
+                            director->ch_patronymic();
                             break;
                         case -1:
                             flag3 = false;

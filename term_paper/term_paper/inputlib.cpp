@@ -167,7 +167,7 @@ std::string Input::name(int max_len, int min_len) {
 		{
 			if ((future_string.length() == 0) && (!isupper(get))) {
 				future_string.push_back(toupper(char(get)));
-				std::cout << toupper(char(get));
+				std::cout << char(toupper(char(get)));
 				continue;
 			}
 			if (future_string.length() >= max_len) continue;
