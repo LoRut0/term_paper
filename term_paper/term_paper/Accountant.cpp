@@ -221,7 +221,7 @@ inline std::array<double, 5> Accountant::salary_calculation() {
 	salary_rate[2] * base_salary[2], salary_rate[3] * base_salary[3], salary_rate[4] * base_salary[4], };
 }
 
-inline double Accountant::average_salary(int guards, int electricians) {
+double Accountant::average_salary(int guards, int electricians) {
 	std::array<double, 5> salaries = salary_calculation();
 	double sum = salaries[0] + salaries[1] + salaries[2] + salaries[3] * guards + salaries[4] * electricians;
 	int num_of_workers = 3 + guards + electricians;

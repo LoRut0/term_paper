@@ -35,8 +35,6 @@ public:
 
     //Change bitrthday format(dd.mm.yyyy)
     void ch_birthday() override;
-
-    double average_salary(int guards, int electricians);
 //CHANGERS
     
 //GETTERS
@@ -63,5 +61,8 @@ public:
     void ch_base_salary();
     //get base salary
     std::array<int, 5> get_base_salary();
+    
+    //returns average salary in company
+    double average_salary(int guards, int electricians);
 };
 

@@ -346,7 +346,7 @@ void ControlMenu::start() {
                     }
                     break;
                 }
-                case 2: 
+                case 2:
                 {
                     if (secretary == NULL) {
                         std::cout << "Секретарь отсутствует" << std::endl;
@@ -358,28 +358,34 @@ void ControlMenu::start() {
                         system("cls");
                         std::cout << director->get_company_name() << std::endl;
                         std::cout << "Секретарь: "; print_name(secretary->get_fullname()); print_birthday(secretary->get_birthday()); std::cout << "\n";
-                        std::cout << "Меню\n(1) Вывести языки, которыми владеет секретарь\n(2) Изменить языки, которыми владеет секретарь\n(3) Вывести всех сотрудников компании в таблицу\n(4) Вывести всех охранников в таблицу\n(5) Вывести всех электриков в таблицу\n";
-                        switch (Input::choice(1, 5))
+                        std::cout << "Меню\n(1) Языки, которыми владеет секретарь\n(2) Вывести всех сотрудников компании в таблицу\n(3) Вывести всех охранников в таблицу\n(4) Вывести всех электриков в таблицу\n";
+                        std::cout << "(5) Сменить имя\n(6) Сменить фамилию\n(7) Сменить отчество\n";
+                        switch (Input::choice(1, 7))
                         {
                         case 1:
-                            secretary->print_languages();
-                            system("pause");
-                            break;
-                        case 2:
                             secretary->change_languages();
                             system("pause");
                             break;
-                        case 3:
+                        case 2:
                             secretary->print_employers();
                             system("pause");
                             break;
-                        case 4:
+                        case 3:
                             secretary->print_guards();
                             system("pause");
                             break;
-                        case 5:
+                        case 4:
                             secretary->print_electricians();
                             system("pause");
+                            break;
+                        case 5:
+                            secretary->ch_name();
+                            break;
+                        case 6:
+                            secretary->ch_surname();
+                            break;
+                        case 7:
+                            secretary->ch_patronymic();
                             break;
                         case -1:
                             flag3 = false;
@@ -389,6 +395,52 @@ void ControlMenu::start() {
                         }
                     }
                     break;
+                }
+                case 3:
+                {
+                    if (accountant == NULL) {
+                        std::cout << "Бухгалтер отсутствует" << std::endl;
+                        system("pause");
+                        break;
+                    }
+                    bool flag3(true);
+                    while (flag3) {
+                        system("cls");
+                        std::cout << director->get_company_name() << std::endl;
+                        std::cout << "Бухгалтер: "; print_name(accountant->get_fullname()); print_birthday(accountant->get_birthday()); std::cout << "\n";
+                        std::cout << "Меню\n(1) Оклад\n(2) Ставка\n(3) Вывести среднюю зарплату\n";
+                        std::cout << "(4) Сменить имя\n(5) Сменить фамилию\n(6) Сменить отчество\n";
+                        switch (Input::choice(1, 7))
+                        {
+                        case 1:
+                            accountant->ch_base_salary();
+                            break;
+                        case 2:
+                            accountant->ch_salary_rate();
+                            break;
+                        case 3: {
+                            double avg_slry = accountant->average_salary(guards->size(), electricians->size());
+                            std::cout << "Средняя зарплата: " << avg_slry << std::endl;
+                            system("pause");
+                            break;
+                        }
+                        case 4:
+                            accountant->ch_name();
+                            break;
+                        case 5:
+                            accountant->ch_surname();
+                            break;
+                        case 6:
+                            accountant->ch_patronymic();
+                            break;
+                        case -1:
+                            flag3 = false;
+                            break;
+                        default:
+                            break;
+                        }
+
+                    }
                 }
                 case -1:
                     flag2 = false;
