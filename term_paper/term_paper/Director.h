@@ -27,8 +27,6 @@ class Director :
 	Secretary* secretary;
 	//pointer to Accountant
 	Accountant* accountant;
-	//pointer to self
-	Director* self;
 
 	//company name
 	std::string company_name;
@@ -61,7 +59,7 @@ public:
 	std::array<int, 3> get_birthday() override;
 //GETTERS
 
-	Director(std::string name, std::string surname, std::string patronymic, std::array<int, 3> birthday, std::string comp_name);
+	Director(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::string comp_name);
 	~Director();
 
 //BASE
@@ -72,6 +70,13 @@ public:
 	void fire_employers();
 	//hire employers
 	void hire_employers();
+
+	void hire_employers(Accountant emp);
+	void hire_employers(Secretary emp);
+	void hire_employers(Guard emp);
+	void hire_employers(Electrician emp);
+
+	void get_pnts(Accountant** accountant_, Secretary** secretary_, std::vector<Guard>** guard_vec, std::vector<Electrician>** electrician_vec);
 
 	//get company name
 	std::string get_company_name();

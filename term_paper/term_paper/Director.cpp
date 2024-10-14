@@ -4,19 +4,19 @@
 
 void Director::ch_name()
 {
-	std::cout << "Enter name: ";
+	std::cout << "Введите имя: ";
 	full_name[0] = Input::name(25);
 };
 
 void  Director::ch_surname()
 {
-	std::cout << "Enter surname: ";
+	std::cout << "Введите фамилию: ";
 	full_name[1] = Input::name(25);
 };
 
 void Director::ch_patronymic()
 {
-	std::cout << "Enter patronymic: ";
+	std::cout << "Введите отчество: ";
 	full_name[2] = Input::name(25);
 };
 
@@ -42,6 +42,7 @@ void Director::ch_birthday()
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
+	std::cout << "Введите день рождения: ";
 	std::string temp = Input::date(1900, current_year);
 	std::string date[3];
 
@@ -64,22 +65,18 @@ std::array<int, 3> Director::get_birthday()
 	return birthday;
 };
 
-Director::Director(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, std::string comp_name)
+Director::Director(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::string comp_name)
 {
-	full_name[0] = name;
-	full_name[1] = surname;
-	full_name[2] = patronymic;
+	this->full_name = full_name;
 	salary = 1;
 	
 	birthday = input_birthday;
 	company_name = comp_name;
 
-	//initialization of pointers
 	electricians = new std::vector<Electrician>;
 	guards = new std::vector<Guard>;
-	secretary = new Secretary;
-	accountant = new Accountant;
-	self = this;
+	secretary = NULL;
+	accountant = NULL;
 };
 
 Director::~Director() 
@@ -100,7 +97,7 @@ void Director::print_employers()
 		std::cout << "Электрики:" << std::endl;
 		for (Electrician& electrician : *electricians) {
 			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
-			std::cout << iter << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
+			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
 		}
 	}
 	else std::cout << "Электрики отсутствуют" << std::endl;
@@ -111,7 +108,7 @@ void Director::print_employers()
 		std::cout << "Охранники:" << std::endl;
 		for (Guard& guard : *guards) {
 			std::array<std::string, 3> guard_full_name = guard.get_fullname();
-			std::cout << iter << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
+			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
 		}
 	}
 	else std::cout << "Охранники отсутствуют" << std::endl;
@@ -190,43 +187,58 @@ void Director::hire_employers()
 		case 1: {
 			if (secretary) {
 				std::cout << "Нельзя нанять 2 секретаря" << std::endl;
+				system("pause");
 				break;
 			}
-			Secretary new_secretary;
-			new_secretary.ch_name();
-			new_secretary.ch_surname();
-			new_secretary.ch_patronymic();
-			new_secretary.ch_birthday();
+			Secretary* new_secretary = new Secretary;
+			new_secretary->ch_name();
+			new_secretary->ch_surname();
+			new_secretary->ch_patronymic();
+			new_secretary->ch_birthday();
+			new_secretary->change_languages();
 
-			*secretary = new_secretary;
+			secretary = new_secretary;
+			secretary->pnt_initialization(electricians, guards, accountant);
 			break;
 		}
 		case 2: {
 			if (accountant) {
 				std::cout << "Нельзя нанять 2 бухгалтера" << std::endl;
+				system("pause");
 				break;
 			}
-			Accountant new_accountant;
-			new_accountant.ch_name();
-			new_accountant.ch_surname();
-			new_accountant.ch_patronymic();
-			new_accountant.ch_birthday();
+			Accountant* new_accountant = new Accountant;
+			new_accountant->ch_name();
+			new_accountant->ch_surname();
+			new_accountant->ch_patronymic();
+			new_accountant->ch_birthday();
+			new_accountant->ch_base_salary();
+			new_accountant->ch_salary_rate();
 
-			*accountant = new_accountant;
+			accountant = new_accountant;
 			break;
 		}
 		case 3: {
-			if ((*guards).size() == 0) break;
-			std::cout << "Введите номер охранника, которого хотите уволить: ";
-			int number = Input::int_(1, (*guards).size()) - 1;
-			(*guards).erase((*guards).begin() + number);
+			Guard guard;
+			guard.ch_name();
+			guard.ch_surname();
+			guard.ch_patronymic();
+			guard.ch_birthday();
+			guard.ch_weapon();
+			guard.ch_shift();
+
+			guards->push_back(guard);
 			break;
 		}
 		case 4: {
-			if ((*electricians).size() == 0) break;
-			std::cout << "Введите номер электрика, которого хотите уволить: ";
-			int number = Input::int_(1, (*electricians).size()) - 1;
-			(*electricians).erase((*electricians).begin() + number);
+			Electrician electrician;
+			electrician.ch_name();
+			electrician.ch_surname();
+			electrician.ch_patronymic();
+			electrician.ch_birthday();
+			electrician.ch_category();
+
+			electricians->push_back(electrician);
 			break;
 		}
 		case -1:
@@ -238,6 +250,31 @@ void Director::hire_employers()
 	}
 }
 
+void Director::hire_employers(Accountant emp) {
+	accountant = new Accountant;
+	*accountant = emp;
+}
+
+void Director::hire_employers(Secretary emp) {
+	emp.pnt_initialization(electricians, guards, accountant);
+	secretary = new Secretary;
+	*secretary = emp;
+}
+
+void Director::hire_employers(Guard emp) {
+	guards->push_back(emp);
+}
+
+void Director::hire_employers(Electrician emp) {
+	electricians->push_back(emp);
+}
+
+void Director::get_pnts(Accountant** accountant_, Secretary** secretary_, std::vector<Guard>** guard_vec, std::vector<Electrician>** electrician_vec) {
+	*accountant_ = accountant;
+	*secretary_ = secretary;
+	*guard_vec = guards;
+	*electrician_vec = electricians;
+}
 
 std::string Director::get_company_name() {
 	return company_name;

@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-
 #include "Employee.h"
 #include "Guard.h"
 #include "Electrician.h"
@@ -54,7 +52,7 @@ public:
     std::array<int, 3> get_birthday() override;
 //GETTERS
 
-    Secretary(std::string name, std::string surname, std::string patronymic, std::vector<std::string> langs, Accountant* accountant, std::vector<Guard>* guards, std::vector<Electrician>* electricians);
+    Secretary(std::array<std::string, 3> full_name, std::array<int, 3> birthday, std::vector<std::string> langs);
     Secretary();
 //BASE
     
@@ -69,5 +67,7 @@ public:
     void print_guards();
     //print electricians
     void print_electricians();
+
+    void pnt_initialization(std::vector<Electrician>* electricians, std::vector<Guard>* guards, Accountant* accountant);
 };
 

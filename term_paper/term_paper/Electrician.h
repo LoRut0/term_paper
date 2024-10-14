@@ -44,7 +44,7 @@ public:
     std::array<int, 3> get_birthday() override;
 //GETTERS
 
-    Electrician(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, int cat);
+    Electrician(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, int cat);
     Electrician();
 //BASE
     

@@ -1,9 +1,5 @@
 #pragma once
 #include "Employee.h"
-#include "Electrician.h"
-#include "Director.h"
-#include "Secretary.h"
-#include "Guard.h"
 
 class Accountant :
     public Employee
@@ -22,17 +18,8 @@ class Accountant :
     0 - Director, 1 - Accountant, 2 - Secretary, 3 - Security, 4 - Electrician*/
     std::array<double, 5> salary_rate;
 
-    //pointer to vector with ellectricians
-    std::vector<Electrician>* electricians;
-    //pointer to vector with guards
-    std::vector<Guard>* guards;
-    //pointer to Secretary
-    Secretary* secretary;
-    //pointer to Director
-    Director* director;
-
     //fuction that changes salaries of employees
-    void salary_calculation();
+    std::array<double, 5> salary_calculation();
 public:
 //BASE
 //CHANGERS
@@ -49,7 +36,7 @@ public:
     //Change bitrthday format(dd.mm.yyyy)
     void ch_birthday() override;
 
-    double average_salary();
+    double average_salary(int guards, int electricians);
 //CHANGERS
     
 //GETTERS
@@ -63,8 +50,7 @@ public:
     std::array<int, 3> get_birthday() override;
 //GETTERS
 
-    Accountant(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, std::array<int, 5> base_slry, std::array<double, 5> slry_rate, 
-        std::vector<Electrician>* electricians, std::vector<Guard>* guards, Secretary* secretary, Director* director);
+    Accountant(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::array<int, 5> base_slry, std::array<double, 5> slry_rate);
     Accountant();
 //BASE
 

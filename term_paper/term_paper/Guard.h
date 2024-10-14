@@ -13,7 +13,8 @@ class Guard:
     std::array<int, 3> birthday;
     //Weapon
 	std::string weapon;
-
+    //Working shift (1) 22:00-06:00, (2) 06:00-14:00 (3) 14:00-22:00
+    int shift;
 public:
 //BASE
 //CHANGERS
@@ -42,7 +43,7 @@ public:
     std::array<int, 3> get_birthday() override;
 //GETTERS
 
-    Guard(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday);
+    Guard(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::string weapon, int input_shift);
     Guard();
 //BASE
 
@@ -50,5 +51,10 @@ public:
     std::string get_weapon();
     //change weapon
 	void ch_weapon();
+
+    //get working shift (1) 22:00-06:00, (2) 06:00-14:00 (3) 14:00-22:00
+    int get_shift();
+    //change working shift (1) 22:00-06:00, (2) 06:00-14:00 (3) 14:00-22:00
+    void ch_shift();
 };
 

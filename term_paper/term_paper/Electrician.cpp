@@ -4,19 +4,19 @@
 
 void Electrician::ch_name()
 {
-	std::cout << "Enter name: ";
+	std::cout << "¬ведите им€: ";
 	full_name[0] = Input::name(25);
 };
 
 void  Electrician::ch_surname()
 {
-	std::cout << "Enter surname: ";
+	std::cout << "¬ведите фамилию: ";
 	full_name[1] = Input::name(25);
 };
 
 void Electrician::ch_patronymic()
 {
-	std::cout << "Enter patronymic: ";
+	std::cout << "¬ведите отчество: ";
 	full_name[2] = Input::name(25);
 };
 
@@ -42,6 +42,7 @@ void Electrician::ch_birthday()
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
+	std::cout << "¬ведите день рождени€: ";
 	std::string temp = Input::date(1900, current_year);
 	std::string date[3];
 
@@ -64,11 +65,9 @@ std::array<int, 3> Electrician::get_birthday()
 	return birthday;
 };
 
-Electrician::Electrician(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, int cat)
+Electrician::Electrician(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, int cat)
 {
-	full_name[0] = name;
-	full_name[1] = surname;
-	full_name[2] = patronymic;
+	this->full_name = full_name;
 	salary = 1;
 
 	birthday = input_birthday;
@@ -85,7 +84,6 @@ Electrician::Electrician()
 
 	birthday = { 0,0,0 };
 	category = 0;
-	height_cat = 0;
 };
 //base
 
@@ -94,9 +92,8 @@ int Electrician::get_category() {
 }
 
 void Electrician::ch_category() {
-	std::cout << "ƒл€ отмены нажмите esc\n¬ведите разр€д электрика (1-6): ";
+	std::cout << "¬ведите разр€д электрика (1-6): ";
 	int new_cat = Input::int_(1, 6);
-	if (new_cat == INT_MIN) return;
 	category = new_cat;
 }
 

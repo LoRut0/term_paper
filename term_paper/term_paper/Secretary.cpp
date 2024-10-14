@@ -4,19 +4,19 @@
 
 void Secretary::ch_name()
 {
-	std::cout << "Enter name: ";
+	std::cout << "Введите имя: ";
 	full_name[0] = Input::name(25);
 };
 
 void  Secretary::ch_surname()
 {
-	std::cout << "Enter surname: ";
+	std::cout << "Введите фамилию: ";
 	full_name[1] = Input::name(25);
 };
 
 void Secretary::ch_patronymic()
 {
-	std::cout << "Enter patronymic: ";
+	std::cout << "Введите отчество: ";
 	full_name[2] = Input::name(25);
 };
 
@@ -42,6 +42,7 @@ void Secretary::ch_birthday()
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
+	std::cout << "Введите день рождения: ";
 	std::string temp = Input::date(1900, current_year);
 	std::string date[3];
 
@@ -64,20 +65,13 @@ std::array<int, 3> Secretary::get_birthday()
 	return birthday;
 };
 
-Secretary::Secretary(std::string name, std::string surname, std::string patronymic, std::vector<std::string> langs, Accountant* accountant, std::vector<Guard>* guards, std::vector<Electrician>* electricians)
+Secretary::Secretary(std::array<std::string, 3> full_name, std::array<int, 3> birthday, std::vector<std::string> langs)
 {
-	full_name[0] = name;
-	full_name[1] = surname;
-	full_name[2] = patronymic;
+	this->full_name = full_name;
 	salary = 1;
 	
 	languages = langs;
-
-	this->accountant = accountant;
-	this->electricians = electricians;
-	this->guards = guards;
-
-	birthday = { 0,0,0 };
+	this->birthday = birthday;
 };
 
 Secretary::Secretary()
@@ -112,7 +106,7 @@ void Secretary::change_languages() {
 			std::cout << "(2) Удалить\n";
 			choice = Input::choice(1, 1);
 		}
-		else choice = Input::choice(1, 3);
+		else choice = Input::choice(1, 2);
 
 		switch (choice)
 		{
@@ -128,6 +122,10 @@ void Secretary::change_languages() {
 			break;
 		}
 		case -1: {
+			if (languages.size() == 0) {
+				std::cout << "Секретарь не может быть немым..." << std::endl;
+				break;
+			}
 			flag = false;
 			break;
 		}
@@ -140,13 +138,20 @@ void Secretary::change_languages() {
 
 //PRINT NEED TO ADD TABLE!!!!!!!!!!!!!!!!!!
 void Secretary::print_employers() {
+	//Accountant
+	if (accountant) {
+		std::array<std::string, 3> accountant_full_name = accountant->get_fullname();
+		std::cout << "Бухгалтер: " << accountant_full_name[0] << " " << accountant_full_name[1] << " " << accountant_full_name[2] << std::endl;
+	}
+	else std::cout << "Бухгалтер отсутствует" << std::endl;
+
 	//Electricians
 	if ((*electricians).size() > 0) {
 		int iter = 1;
 		std::cout << "Электрики:" << std::endl;
 		for (Electrician& electrician : *electricians) {
 			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
-			std::cout << iter << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
+			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
 		}
 	}
 	else std::cout << "Электрики отсутствуют" << std::endl;
@@ -157,17 +162,10 @@ void Secretary::print_employers() {
 		std::cout << "Охранники:" << std::endl;
 		for (Guard& guard : *guards) {
 			std::array<std::string, 3> guard_full_name = guard.get_fullname();
-			std::cout << iter << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
+			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
 		}
 	}
 	else std::cout << "Охранники отсутствуют" << std::endl;
-
-	//Accountant
-	if (accountant) {
-		std::array<std::string, 3> accountant_full_name = accountant->get_fullname();
-		std::cout << "Бухгалтер: " << accountant_full_name[0] << " " << accountant_full_name[1] << " " << accountant_full_name[2] << std::endl;
-	}
-	else std::cout << "Секретарь отсутствует" << std::endl;
 }
 
 void Secretary::print_guards() {
@@ -194,4 +192,12 @@ void Secretary::print_electricians() {
 		}
 	}
 	else std::cout << "Электрики отсутствуют" << std::endl;
+}
+
+//need to give pointers to classes from director
+void Secretary::pnt_initialization(std::vector<Electrician>* electricians, std::vector<Guard>* guards, Accountant* accountant) {
+	this->electricians = electricians;
+	this->guards = guards;
+	this->accountant = accountant;
+	return;
 }

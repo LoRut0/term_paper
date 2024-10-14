@@ -4,19 +4,19 @@
 
 void Guard::ch_name()
 {
-	std::cout << "Enter name: ";
+	std::cout << "¬ведите им€: ";
 	full_name[0] = Input::name(25);
 };
 
 void  Guard::ch_surname()
 {
-	std::cout << "Enter surname: ";
+	std::cout << "¬ведите фамилию: ";
 	full_name[1] = Input::name(25);
 };
 
 void Guard::ch_patronymic()
 {
-	std::cout << "Enter patronymic: ";
+	std::cout << "¬ведите отчество: ";
 	full_name[2] = Input::name(25);
 };
 
@@ -42,6 +42,7 @@ void Guard::ch_birthday()
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
+	std::cout << "¬ведите день рождени€: ";
 	std::string temp = Input::date(1900, current_year);
 	std::string date[3];
 
@@ -64,14 +65,13 @@ std::array<int, 3> Guard::get_birthday()
 	return birthday;
 };
 
-Guard::Guard(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday)
+Guard::Guard(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::string weapon, int input_shift)
 {
-	full_name[0] = name;
-	full_name[1] = surname;
-	full_name[2] = patronymic;
+	this->full_name = full_name;
 	salary = 1;
-
 	birthday = input_birthday;
+	this->weapon = weapon;
+	shift = input_shift;
 };
 
 Guard::Guard()
@@ -80,6 +80,7 @@ Guard::Guard()
 	full_name[1] = "surname";
 	full_name[2] = "patronymic";
 	salary = -1;
+	shift = 0;
 
 	birthday = { 0,0,0 };
 };
@@ -92,8 +93,16 @@ std::string Guard::get_weapon() {
 }
 
 void Guard::ch_weapon() {
-	std::cout << "ƒл€ отмены нажмите esc\n¬ведите спец. средство охранника: ";
+	std::cout << "¬ведите спец. средство охранника: ";
 	std::string new_weapon = Input::str(100);
-	if (new_weapon == "\n") return;
 	weapon = new_weapon;
+}
+
+int Guard::get_shift() {
+	return shift;
+}
+
+void Guard::ch_shift() {
+	std::cout << "(1) 22:00-06:00, (2) 06:00-14:00 (3) 14:00-22:00\n¬ведите смену охранника: ";
+	shift = Input::int_(1, 3);
 }

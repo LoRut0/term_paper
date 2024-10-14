@@ -5,19 +5,19 @@
 
 void Accountant::ch_name()
 {
-	std::cout<<"Enter name: ";
+	std::cout<<"Введите имя: ";
 	full_name[0] = Input::name(25);
 };
 
 void  Accountant::ch_surname()
 {
-	std::cout << "Enter surname: ";
+	std::cout << "Введите фамилию: ";
 	full_name[1] = Input::name(25);
 };
 
 void Accountant::ch_patronymic()
 {
-	std::cout << "Enter patronymic: ";
+	std::cout << "Введите отчество: ";
 	full_name[2] = Input::name(25);
 };
 
@@ -43,6 +43,7 @@ void Accountant::ch_birthday()
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
+	std::cout << "Введите день рождения: ";
 	std::string temp = Input::date(1900, current_year);
 	std::string date[3];
 
@@ -65,22 +66,14 @@ std::array<int, 3> Accountant::get_birthday()
 	return birthday;
 };
 
-Accountant::Accountant(std::string name, std::string surname, std::string patronymic, std::array<int, 3> input_birthday, std::array<int, 5> base_slry, std::array<double, 5> slry_rate,
-	std::vector<Electrician>* electricians, std::vector<Guard>* guards, Secretary* secretary, Director* director)
+Accountant::Accountant(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::array<int, 5> base_slry, std::array<double, 5> slry_rate)
 {
-	full_name[0] = name;
-	full_name[1] = surname;
-	full_name[2] = patronymic;
+	this->full_name = full_name;
 	salary = 1;
 
 	base_salary = base_slry;
 	salary_rate = slry_rate;
 	birthday = input_birthday;
-
-	this->electricians = electricians;
-	this->guards = guards;
-	this->secretary = secretary;
-	this->director = director;
 };
 
 Accountant::Accountant()
@@ -90,7 +83,7 @@ Accountant::Accountant()
 	full_name[2] = "patronymic";
 	salary = -1;
 
-	base_salary = { 0,0,0,0,0 };
+	base_salary = { 100,100,100,100,100 };
 	salary_rate = { 1,1,1,1,1 };
 	birthday = { 0,0,0 };
 };
@@ -169,11 +162,11 @@ void Accountant::ch_base_salary() {
 	{
 		system("cls");
 		std::cout << "Оклады по должностям: " << std::endl;
-		std::cout << "(1) Директор: " << salary_rate[0] << std::endl;
-		std::cout << "(2) Бухгалтер: " << salary_rate[1] << std::endl;
-		std::cout << "(3) Секретарь: " << salary_rate[2] << std::endl;
-		std::cout << "(4) Охранник: " << salary_rate[3] << std::endl;
-		std::cout << "(5) Электрик: " << salary_rate[4] << std::endl;
+		std::cout << "(1) Директор: " << base_salary[0] << std::endl;
+		std::cout << "(2) Бухгалтер: " << base_salary[1] << std::endl;
+		std::cout << "(3) Секретарь: " << base_salary[2] << std::endl;
+		std::cout << "(4) Охранник: " << base_salary[3] << std::endl;
+		std::cout << "(5) Электрик: " << base_salary[4] << std::endl;
 
 		std::cout << "Для выхода нажмите Esc\nВыберите должность, оклад которой вы хотите изменить" << std::endl;
 		switch (Input::choice(1, 5))
@@ -222,24 +215,15 @@ void Accountant::ch_base_salary() {
 	}
 }
 
-void Accountant::salary_calculation() {
-	director->ch_salary(base_salary[0] * salary_rate[0]);
-	this->ch_salary(base_salary[1] * salary_rate[1]);
-	secretary->ch_salary(base_salary[2] * salary_rate[2]);
-	for(Guard guard : *guards) guard.ch_salary(base_salary[3] * salary_rate[3]);
-	for(Electrician electrician : *electricians) electrician.ch_salary(base_salary[3] * salary_rate[3]);
-	return;
+//0 - Director, 1 - Accountant, 2 - Secretary, 3 - Security, 4 - Electrician
+inline std::array<double, 5> Accountant::salary_calculation() {
+	return {salary_rate[0] * base_salary[0], salary_rate[1] * base_salary[1], 
+	salary_rate[2] * base_salary[2], salary_rate[3] * base_salary[3], salary_rate[4] * base_salary[4], };
 }
 
-double Accountant::average_salary() {
-	double sum;
-	int num_of_emps(3);
-	sum += director->get_salary();
-	sum += this->get_salary();
-	sum += secretary->get_salary();
-	for (Guard guard : *guards) sum += guard.get_salary();
-	num_of_emps += (*guards).size();
-	for (Electrician electrician : *electricians) sum += electrician.get_salary();
-	num_of_emps += (*electricians).size();
-	return sum / num_of_emps;
+inline double Accountant::average_salary(int guards, int electricians) {
+	std::array<double, 5> salaries = salary_calculation();
+	double sum = salaries[0] + salaries[1] + salaries[2] + salaries[3] * guards + salaries[4] * electricians;
+	int num_of_workers = 3 + guards + electricians;
+	return sum / num_of_workers;
 }
