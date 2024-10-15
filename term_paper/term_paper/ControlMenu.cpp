@@ -414,9 +414,11 @@ void ControlMenu::start() {
                         {
                         case 1:
                             accountant->ch_base_salary();
+                            salary_update(&electricians, &guards, &secretary, &director, &accountant);
                             break;
                         case 2:
                             accountant->ch_salary_rate();
+                            salary_update(&electricians, &guards, &secretary, &director, &accountant);
                             break;
                         case 3: {
                             double avg_slry = accountant->average_salary(guards->size(), electricians->size());
@@ -439,8 +441,126 @@ void ControlMenu::start() {
                         default:
                             break;
                         }
-
                     }
+                }
+                case 4:
+                {
+                    if (guards->size() == 0) {
+                        std::cout << "Охранники отсутствуют" << std::endl;
+                        system("pause");
+                        break;
+                    }
+                    bool flag3(true);
+                    while (flag3) {
+                        system("cls");
+                        std::cout << director->get_company_name() << std::endl;
+                        int num = director->print_guards();
+                        std::cout << "Введите номер охранника: "; int guard_choice = Input::int_(1, num);
+                        if (guard_choice == INT_MIN) {
+                            flag3 = false;
+                            break;
+                        }
+                        guard_choice--;
+                        bool flag4 = true;
+                        while (flag4) {
+                            system("cls");
+                            std::cout << director->get_company_name() << std::endl;
+                            std::cout << "Охранник: "; print_name((*guards)[guard_choice].get_fullname()); print_birthday((*guards)[guard_choice].get_birthday()); std::cout << "\n";
+                            std::cout << "Спец. инструмент: " << (*guards)[guard_choice].get_weapon() << std::endl;
+                            std::string shift;
+                            switch ((*guards)[guard_choice].get_shift())
+                            {
+                            case 1: 
+                                shift = "22:00-06:00";
+                                break;
+                            case 2:
+                                shift = "06:00-14:00";
+                                break;
+                            case 3:
+                                shift = "14:00-22:00";
+                                break;
+                            default:
+                                break;
+                            }
+                            std::cout << "Смена: " << shift << std::endl;
+                            std::cout << "Меню\n(1) Сменить спец. инструмент\n(2) Изменить смену\n";
+                            std::cout << "(3) Сменить имя\n(4) Сменить фамилию\n(5) Сменить отчество\n";
+                            switch (Input::choice(1, 5))
+                            {
+                            case 1:
+                                (*guards)[guard_choice].ch_weapon();
+                                break;
+                            case 2:
+                                (*guards)[guard_choice].ch_shift();
+                                break;
+                            case 3:
+                                (*guards)[guard_choice].ch_name();
+                                break;
+                            case 4:
+                                (*guards)[guard_choice].ch_surname();
+                                break;
+                            case 5:
+                                (*guards)[guard_choice].ch_patronymic();
+                                break;
+                            case -1:
+                                flag4 = false;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
+                case 5:
+                {
+                    if (electricians->size() == 0) {
+                        std::cout << "Электрики отсутствуют" << std::endl;
+                        system("pause");
+                        break;
+                    }
+                    bool flag3(true);
+                    while (flag3) {
+                        system("cls");
+                        std::cout << director->get_company_name() << std::endl;
+                        int num = director->print_electricians();
+                        std::cout << "Введите номер электрика: "; int elec_choice = Input::int_(1, num);
+                        if (elec_choice == INT_MIN) {
+                            flag3 = false;
+                            break;
+                        }
+                        elec_choice--;
+                        bool flag4 = true;
+                        while (flag4) {
+                            system("cls");
+                            std::cout << director->get_company_name() << std::endl;
+                            std::cout << "Электрик: "; print_name((*electricians)[elec_choice].get_fullname()); print_birthday((*electricians)[elec_choice].get_birthday()); std::cout << "\n";
+                            std::cout << "Разряд: " << (*electricians)[elec_choice].get_category() << std::endl;
+                            std::cout << "Меню\n(1) Сменить разряд\n";
+                            std::cout << "(2) Сменить имя\n(3) Сменить фамилию\n(4) Сменить отчество\n";
+                            switch (Input::choice(1, 5))
+                            {
+                            case 1:
+                                (*electricians)[elec_choice].ch_category();
+                                break;
+                            case 2:
+                                (*electricians)[elec_choice].ch_name();
+                                break;
+                            case 3:
+                                (*electricians)[elec_choice].ch_surname();
+                                break;
+                            case 4:
+                                (*electricians)[elec_choice].ch_patronymic();
+                                break;
+                            case -1:
+                                flag4 = false;
+                                break;
+                            default:
+                                break;
+                            }
+                        }
+                    }
+                    break;
                 }
                 case -1:
                     flag2 = false;
@@ -461,3 +581,18 @@ void ControlMenu::start() {
         }
     }
 }   
+
+void ControlMenu::salary_update(std::vector<Electrician>** electricians, std::vector<Guard>** guards, Secretary** secretary, Director** director, Accountant** accountant) 
+{
+    std::array<int, 5> base = (*accountant)->get_base_salary();
+    std::array<double, 5> rate = (*accountant)->get_salary_rate();
+    std::array<double, 5> salary{ base[0] * rate[0], base[1] * rate[1], base[2] * rate[2], base[3] * rate[3], base[4] * rate[4] };
+    /*Base salaries
+    0 - Director, 1 - Accountant, 2 - Secretary, 3 - Security, 4 - Electrician*/
+    (*director)->ch_salary(salary[0]);
+    (*accountant)->ch_salary(salary[1]);
+    if (*secretary) (*secretary)->ch_salary(salary[2]);
+    for (int i = 0; i < (*guards)->size(); i++) (**guards)[i].ch_salary(salary[3]);
+    for (int i = 0; i < (*electricians)->size(); i++) (**electricians)[i].ch_salary(salary[3]);
+    return;
+}

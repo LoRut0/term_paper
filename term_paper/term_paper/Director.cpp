@@ -25,6 +25,33 @@ void Director::ch_salary(double slry)
 	salary = slry;
 };
 
+int Director::print_guards() {
+	//Guards
+	if ((*guards).size() > 0) {
+		int iter = 1;
+		std::cout << "Охранники:" << std::endl;
+		for (Guard& guard : *guards) {
+			std::array<std::string, 3> guard_full_name = guard.get_fullname();
+			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
+		}
+	}
+	else std::cout << "Охранники отсутствуют" << std::endl;
+	return guards->size();
+}
+
+int Director::print_electricians() {
+	//Electricians
+	if ((*electricians).size() > 0) {
+		int iter = 1;
+		std::cout << "Электрики:" << std::endl;
+		for (Electrician& electrician : *electricians) {
+			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
+			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
+		}
+	}
+	else std::cout << "Электрики отсутствуют" << std::endl;
+	return electricians->size();
+}
 
 std::array<std::string, 3> Director::get_fullname()
 {
@@ -91,28 +118,6 @@ Director::~Director()
 
 void Director::print_employers() 
 {
-	//Electricians
-	if ((*electricians).size() > 0) {
-		int iter = 1;
-		std::cout << "Электрики:" << std::endl;
-		for (Electrician& electrician : *electricians) {
-			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
-			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
-		}
-	}
-	else std::cout << "Электрики отсутствуют" << std::endl;
-
-	//Guards
-	if ((*guards).size() > 0) {
-		int iter = 1;
-		std::cout << "Охранники:" << std::endl;
-		for (Guard& guard : *guards) {
-			std::array<std::string, 3> guard_full_name = guard.get_fullname();
-			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
-		}
-	}
-	else std::cout << "Охранники отсутствуют" << std::endl;
-
 	//Secretary
 	if (secretary) {
 		std::array<std::string, 3> secretary_full_name = secretary->get_fullname();
@@ -127,6 +132,27 @@ void Director::print_employers()
 	}
 	else std::cout << "Секретарь отсутствует" << std::endl;
 
+	//Guards
+	if ((*guards).size() > 0) {
+		int iter = 1;
+		std::cout << "Охранники:" << std::endl;
+		for (Guard& guard : *guards) {
+			std::array<std::string, 3> guard_full_name = guard.get_fullname();
+			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
+		}
+	}
+	else std::cout << "Охранники отсутствуют" << std::endl;
+
+	//Electricians
+	if ((*electricians).size() > 0) {
+		int iter = 1;
+		std::cout << "Электрики:" << std::endl;
+		for (Electrician& electrician : *electricians) {
+			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
+			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
+		}
+	}
+	else std::cout << "Электрики отсутствуют" << std::endl;
 }
 
 void Director::fire_employers() 
@@ -179,8 +205,15 @@ void Director::hire_employers()
 	{
 		system("cls");
 		print_employers();
-		std::cout << "(Esc) Назад\n(1) Нанять секретаря\n(2) Нанять бухгалтера\n(3) Нанять охранника\n(4) Нанять электрика" << std::endl;
-		int choice = Input::choice();
+		int choice;
+		if (secretary and accountant) {
+			std::cout << "(Esc) Назад\n(1) Нанять секретаря\n(2) Нанять бухгалтера\n(3) Нанять охранника\n(4) Нанять электрика" << std::endl;
+			choice = Input::choice(1, 4);
+		}
+		else {
+			std::cout << "(Esc) Назад\n(1) Нанять секретаря\n(2) Нанять бухгалтера\n" << std::endl;
+			choice = Input::choice(1, 2);
+		}
 
 		switch (choice)
 		{

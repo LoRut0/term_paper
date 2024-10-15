@@ -25,6 +25,8 @@ class ControlMenu
 	//Выводит директора и название компании под номером num
 	inline void print_comp(int num);
 
+	//salary update from accountant to all employers
+	void salary_update(std::vector<Electrician>** electricians, std::vector<Guard>** guards, Secretary** secretary, Director** director, Accountant** accountant);
 public:
 	ControlMenu();
 

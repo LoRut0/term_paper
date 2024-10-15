@@ -66,6 +66,10 @@ public:
 
 	//print employers
 	void print_employers();
+	//print guards
+	int print_guards();
+	//print electricians
+	int print_electricians();
 	//fire employers
 	void fire_employers();
 	//hire employers

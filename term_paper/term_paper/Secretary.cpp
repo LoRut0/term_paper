@@ -124,6 +124,7 @@ void Secretary::change_languages() {
 		case -1: {
 			if (languages.size() == 0) {
 				std::cout << "Секретарь не может быть немым..." << std::endl;
+				system("pause");
 				break;
 			}
 			flag = false;
