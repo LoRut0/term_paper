@@ -2,22 +2,31 @@
 
 //base
 
-void Director::ch_name()
+bool Director::ch_name()
 {
 	std::cout << "Введите имя: ";
-	full_name[0] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[0] = temp;
+	return 0;
 };
 
-void  Director::ch_surname()
+bool  Director::ch_surname()
 {
 	std::cout << "Введите фамилию: ";
-	full_name[1] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[1] = temp;
+	return 0;
 };
 
-void Director::ch_patronymic()
+bool Director::ch_patronymic()
 {
 	std::cout << "Введите отчество: ";
-	full_name[2] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[2] = temp;
+	return 0;
 };
 
 void Director::ch_salary(double slry)
@@ -63,14 +72,15 @@ int Director::get_salary()
 	return salary;
 };
 
-void Director::ch_birthday()
+bool Director::ch_birthday()
 {
 	auto now = std::chrono::system_clock::now();
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
 	std::cout << "Введите день рождения: ";
-	std::string temp = Input::date(1900, current_year);
+	std::string temp = Input::date(1900, current_year, 1);
+	if (temp == "\n") return 1;
 	std::string date[3];
 
 	date[0].push_back(temp[0]);
@@ -85,6 +95,7 @@ void Director::ch_birthday()
 	birthday[0] = std::stoi(date[2]);
 	birthday[1] = std::stoi(date[1]);
 	birthday[2] = std::stoi(date[0]);
+	return 0;
 };
 
 std::array<int, 3> Director::get_birthday()
@@ -130,7 +141,7 @@ void Director::print_employers()
 		std::array<std::string, 3> accountant_full_name = accountant->get_fullname();
 		std::cout << "Бухгалтер: " << accountant_full_name[0] << " " << accountant_full_name[1] << " " << accountant_full_name[2] << std::endl;
 	}
-	else std::cout << "Секретарь отсутствует" << std::endl;
+	else std::cout << "Бухгалтер отсутствует" << std::endl;
 
 	//Guards
 	if ((*guards).size() > 0) {
@@ -168,25 +179,38 @@ void Director::fire_employers()
 		switch (choice)
 		{
 		case 1: {
-			if (secretary) secretary = NULL;
+			if (!secretary) break;
+			std::cout << "Подтвердите увольнение секретаря (1) - Да, (0) - Нет" << std::endl;
+			if (Input::bool_('0', '1') and secretary) secretary = NULL;
 			break;
 		}
 		case 2: {
-			if (accountant) accountant = NULL;
+			if (!accountant) break;
+			std::cout << "Подтвердите увольнение бухгалтера (1) - Да, (0) - Нет" << std::endl;
+			if (Input::bool_('0', '1') and accountant) {
+				accountant = NULL;
+				if (secretary) secretary->pnt_initialization(electricians, guards, accountant);
+			}
 			break;
 		}
 		case 3: {
 			if ((*guards).size() == 0) break;
 			std::cout << "Введите номер охранника, которого хотите уволить: ";
-			int number = Input::int_(1, (*guards).size()) - 1;
-			(*guards).erase((*guards).begin() + number);
+			int number = Input::int_(1, (*guards).size());
+			if (number == INT_MIN) break;
+
+			std::cout << "Подтвердите увольнение охранника " << number-- << " (1) - Да, (0) - Нет" << std::endl;
+			if (Input::bool_('0', '1')) (*guards).erase((*guards).begin() + number);
 			break;
 		}
 		case 4: {
 			if ((*electricians).size() == 0) break;
 			std::cout << "Введите номер электрика, которого хотите уволить: ";
-			int number = Input::int_(1, (*electricians).size()) - 1;
-			(*electricians).erase((*electricians).begin() + number);
+			int number = Input::int_(1, (*electricians).size());
+			if (number == INT_MIN) break;
+
+			std::cout << "Подтвердите увольнение электрика " << number-- << " (1) - Да, (0) - Нет" << std::endl;
+			if (Input::bool_('0', '1')) (*electricians).erase((*electricians).begin() + number);
 			break;
 		}
 		case -1:
@@ -224,10 +248,10 @@ void Director::hire_employers()
 				break;
 			}
 			Secretary* new_secretary = new Secretary;
-			new_secretary->ch_name();
-			new_secretary->ch_surname();
-			new_secretary->ch_patronymic();
-			new_secretary->ch_birthday();
+			if (new_secretary->ch_name()) break;
+			if (new_secretary->ch_surname()) break;
+			if (new_secretary->ch_patronymic()) break;
+			if (new_secretary->ch_birthday()) break;
 			new_secretary->change_languages();
 
 			secretary = new_secretary;
@@ -241,35 +265,36 @@ void Director::hire_employers()
 				break;
 			}
 			Accountant* new_accountant = new Accountant;
-			new_accountant->ch_name();
-			new_accountant->ch_surname();
-			new_accountant->ch_patronymic();
-			new_accountant->ch_birthday();
+			if (new_accountant->ch_name()) break;
+			if (new_accountant->ch_surname()) break;
+			if (new_accountant->ch_patronymic()) break;
+			if (new_accountant->ch_birthday()) break;
 			new_accountant->ch_base_salary();
 			new_accountant->ch_salary_rate();
 
 			accountant = new_accountant;
-			break;
+			if (secretary) secretary->pnt_initialization(electricians, guards, accountant);
+			break; 
 		}
 		case 3: {
 			Guard guard;
-			guard.ch_name();
-			guard.ch_surname();
-			guard.ch_patronymic();
-			guard.ch_birthday();
-			guard.ch_weapon();
-			guard.ch_shift();
+			if (guard.ch_name()) break;
+			if (guard.ch_surname()) break;
+			if (guard.ch_patronymic()) break;
+			if (guard.ch_birthday()) break;
+			if (guard.ch_weapon()) break;
+			if (guard.ch_shift()) break;
 
 			guards->push_back(guard);
 			break;
 		}
 		case 4: {
 			Electrician electrician;
-			electrician.ch_name();
-			electrician.ch_surname();
-			electrician.ch_patronymic();
-			electrician.ch_birthday();
-			electrician.ch_category();
+			if (electrician.ch_name()) break;
+			if (electrician.ch_surname()) break;
+			if (electrician.ch_patronymic()) break;
+			if (electrician.ch_birthday()) break;
+			if (electrician.ch_category()) break;
 
 			electricians->push_back(electrician);
 			break;
@@ -313,9 +338,10 @@ std::string Director::get_company_name() {
 	return company_name;
 }
 
-void Director::change_company_name() {
+bool Director::change_company_name() {
 	std::cout << "Для отмены нажмите esc\nВведите новое название компании: ";
 	std::string new_name = Input::str(100, 1);
-	if (new_name == "\n") return;
+	if (new_name == "\n") return 1;
 	company_name = new_name;
+	return 0;
 }

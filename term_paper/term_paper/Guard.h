@@ -19,17 +19,17 @@ public:
 //BASE
 //CHANGERS
     //change name
-    void ch_name() override;
+    bool ch_name() override;
     //change surname
-    void ch_surname() override;
+    bool ch_surname() override;
     //change partonymic
-    void ch_patronymic() override;
+    bool ch_patronymic() override;
 
     //change salary
     void ch_salary(double slry) override;
 
     //Change bitrthday format(dd.mm.yyyy)
-    void ch_birthday() override;
+    bool ch_birthday() override;
 //CHANGERS
 
 //GETTERS
@@ -50,11 +50,11 @@ public:
     //get weapon
     std::string get_weapon();
     //change weapon
-	void ch_weapon();
+	bool ch_weapon();
 
     //get working shift (1) 22:00-06:00, (2) 06:00-14:00 (3) 14:00-22:00
     int get_shift();
     //change working shift (1) 22:00-06:00, (2) 06:00-14:00 (3) 14:00-22:00
-    void ch_shift();
+    bool ch_shift();
 };
 

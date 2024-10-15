@@ -12,17 +12,17 @@ class Employee {
 public:
 //CHANGERS
 	//change name
-	virtual void ch_name() = 0;
+	virtual bool ch_name() = 0;
 	//change surname
-	virtual void ch_surname() = 0;
+	virtual bool ch_surname() = 0;
 	//change partonymic
-	virtual void ch_patronymic() = 0;
+	virtual bool ch_patronymic() = 0;
 
 	//change salary
 	virtual void ch_salary(double slry) = 0;
 
 	//Change bitrthday format(dd.mm.yyyy)
-	virtual void ch_birthday() = 0;
+	virtual bool ch_birthday() = 0;
 //CHANGERS
 
 //GETTERS

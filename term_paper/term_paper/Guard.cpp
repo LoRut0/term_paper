@@ -2,22 +2,31 @@
 
 //base
 
-void Guard::ch_name()
+bool Guard::ch_name()
 {
 	std::cout << "¬ведите им€: ";
-	full_name[0] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[0] = temp;
+	return 0;
 };
 
-void  Guard::ch_surname()
+bool  Guard::ch_surname()
 {
 	std::cout << "¬ведите фамилию: ";
-	full_name[1] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[1] = temp;
+	return 0;
 };
 
-void Guard::ch_patronymic()
+bool Guard::ch_patronymic()
 {
 	std::cout << "¬ведите отчество: ";
-	full_name[2] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[2] = temp;
+	return 0;
 };
 
 void Guard::ch_salary(double slry)
@@ -36,14 +45,15 @@ int Guard::get_salary()
 	return salary;
 };
 
-void Guard::ch_birthday()
+bool Guard::ch_birthday()
 {
 	auto now = std::chrono::system_clock::now();
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
 	std::cout << "¬ведите день рождени€: ";
-	std::string temp = Input::date(1900, current_year);
+	std::string temp = Input::date(1900, current_year, 1);
+	if (temp == "\n") return 1;
 	std::string date[3];
 
 	date[0].push_back(temp[0]);
@@ -58,6 +68,7 @@ void Guard::ch_birthday()
 	birthday[0] = std::stoi(date[2]);
 	birthday[1] = std::stoi(date[1]);
 	birthday[2] = std::stoi(date[0]);
+	return 0;
 };
 
 std::array<int, 3> Guard::get_birthday()
@@ -92,17 +103,22 @@ std::string Guard::get_weapon() {
 	return weapon;
 }
 
-void Guard::ch_weapon() {
+bool Guard::ch_weapon() {
 	std::cout << "¬ведите спец. средство охранника: ";
 	std::string new_weapon = Input::str(100);
+	if (new_weapon == "\n") return 1;
 	weapon = new_weapon;
+	return 0;
 }
 
 int Guard::get_shift() {
 	return shift;
 }
 
-void Guard::ch_shift() {
+bool Guard::ch_shift() {
 	std::cout << "(1) 22:00-06:00, (2) 06:00-14:00 (3) 14:00-22:00\n¬ведите смену охранника: ";
-	shift = Input::int_(1, 3);
+	int new_shift = Input::int_(1, 3);
+	if (new_shift == INT_MIN) return 1;
+	shift = new_shift;
+	return 0;
 }

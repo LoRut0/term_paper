@@ -2,22 +2,31 @@
 
 //base
 
-void Electrician::ch_name()
+bool Electrician::ch_name()
 {
 	std::cout << "¬ведите им€: ";
-	full_name[0] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[0] = temp;
+	return 0;
 };
 
-void  Electrician::ch_surname()
+bool  Electrician::ch_surname()
 {
 	std::cout << "¬ведите фамилию: ";
-	full_name[1] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[1] = temp;
+	return 0;
 };
 
-void Electrician::ch_patronymic()
+bool Electrician::ch_patronymic()
 {
 	std::cout << "¬ведите отчество: ";
-	full_name[2] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[2] = temp;
+	return 0;
 };
 
 void Electrician::ch_salary(double slry)
@@ -36,14 +45,15 @@ int Electrician::get_salary()
 	return salary;
 };
 
-void Electrician::ch_birthday()
+bool Electrician::ch_birthday()
 {
 	auto now = std::chrono::system_clock::now();
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
 	std::cout << "¬ведите день рождени€: ";
-	std::string temp = Input::date(1900, current_year);
+	std::string temp = Input::date(1900, current_year, 1);
+	if (temp == "\n") return 1;
 	std::string date[3];
 
 	date[0].push_back(temp[0]);
@@ -58,6 +68,7 @@ void Electrician::ch_birthday()
 	birthday[0] = std::stoi(date[2]);
 	birthday[1] = std::stoi(date[1]);
 	birthday[2] = std::stoi(date[0]);
+	return 0;
 };
 
 std::array<int, 3> Electrician::get_birthday()
@@ -91,10 +102,12 @@ int Electrician::get_category() {
 	return category;
 }
 
-void Electrician::ch_category() {
+bool Electrician::ch_category() {
 	std::cout << "¬ведите разр€д электрика (1-6): ";
 	int new_cat = Input::int_(1, 6);
+	if (new_cat == INT_MIN) return 1;
 	category = new_cat;
+	return 0;
 }
 
 //int Electrician::get_height_cat() {

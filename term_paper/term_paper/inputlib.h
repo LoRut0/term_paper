@@ -30,6 +30,6 @@ namespace Input
 	std::string name(int max_len, int min_len = 1);
 
 	//¬вод даты, min_year <= год <= max_year
-	std::string date(unsigned min_year = 0, unsigned max_year = 9999);
+	std::string date(unsigned min_year = 0, unsigned max_year = 9999, bool esc = 0);
 
 }

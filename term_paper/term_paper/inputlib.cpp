@@ -141,8 +141,19 @@ std::string Input::str(int max_len, int min_len) {
 			future_string.push_back(char(get));
 			std::cout << char(get);
 		}
+		if (get == ' ' and future_string.size() > 0) {
+			if (future_string.length() >= max_len)
+			{
+				continue;
+			}
+			future_string.push_back(char(get));
+			std::cout << char(get);
+		}
 		if (get == 8) back(future_string);
-		if (get == 27) return "\n";
+		if (get == 27) {
+			std::cout << "\n";
+			return "\n";
+		}
 		if (get == 13)
 		{
 			if (future_string.length() >= min_len) {
@@ -163,7 +174,7 @@ std::string Input::name(int max_len, int min_len) {
 	while (true)
 	{
 		get = _getch();
-		if (isalpha(get))
+		if (isalpha(get) || get == ' ')
 		{
 			if ((future_string.length() == 0) && (!isupper(get))) {
 				future_string.push_back(toupper(char(get)));
@@ -175,7 +186,10 @@ std::string Input::name(int max_len, int min_len) {
 			std::cout << char(get);
 		}
 		if (get == 8) back(future_string);
-		if (get == 27) return "\n";
+		if (get == 27) {
+			std::cout << "\n";
+			return "\n";
+		}
 		if (get == 13)
 		{
 			if (future_string.length() >= min_len) {
@@ -202,7 +216,7 @@ double Input::double_rand(double min, double max) {
 	return Border(RandomEngine);
 }
 
-std::string Input::date(unsigned min_year, unsigned max_year)
+std::string Input::date(unsigned min_year, unsigned max_year, bool esc)
 {
 	if (min_year > max_year) {
 		std::cout << "\nERROR: min > max" << std::endl;
@@ -233,7 +247,7 @@ std::string Input::date(unsigned min_year, unsigned max_year)
 			if ((future_string.length() == 3) or (future_string.length() == 6)) back(future_string);
 			back(future_string);
 		}
-		if (get == 27) return "\n";
+		if (get == 27 and esc) return "\n";
 		if (get == 13)
 		{
 			if (future_string.length() != 10) continue; //Если длина не 10, то в начало

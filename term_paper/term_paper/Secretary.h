@@ -28,17 +28,17 @@ public:
 //BASE
 //CHANGERS
     //change name
-    void ch_name() override;
+    bool ch_name() override;
     //change surname
-    void ch_surname() override;
+    bool ch_surname() override;
     //change partonymic
-    void ch_patronymic() override;
+    bool ch_patronymic() override;
 
     //change salary
     void ch_salary(double slry) override;
 
     //Change bitrthday format(dd.mm.yyyy)
-    void ch_birthday() override;
+    bool ch_birthday() override;
 //CHANGERS
 
 //GETTERS

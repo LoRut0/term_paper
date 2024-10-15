@@ -1,4 +1,5 @@
 #include "ControlMenu.h"
+#include "iomanip"
 
 ControlMenu::ControlMenu() {
     read_flag = 0;
@@ -219,7 +220,8 @@ inline void ControlMenu::print_name(std::array<std::string, 3> name) {
 }
 
 inline void ControlMenu::print_birthday(std::array<int, 3> birthday) {
-    std::cout << birthday[0] << '.' << birthday[1] << '.' << birthday[2] << ' ';
+    std::cout << std::right << std::setfill('0') << std::setw(2)
+        << birthday[0] << '.' << std::setw(2) << birthday[1] << '.' << std::setw(2) << birthday[2] << ' ';
     return;
 };
 
@@ -263,20 +265,20 @@ void ControlMenu::start() {
             system("pause");
             break;
         case 2: {
-            Director* new_director = new Director({ "Ivanov", "Ivan", "Ivanovich" }, { 1, 1, 1 }, "Kontora");
-            new_director->change_company_name();
+            Director* new_director = new Director({ " ", " ", " " }, { 1, 1, 1 }, "Kontora");
+            if (new_director->change_company_name()) break;
             std::cout << "Директор:\n";
-            new_director->ch_name();
-            new_director->ch_surname();
-            new_director->ch_patronymic();
-            new_director->ch_birthday();
+            if (new_director->ch_name()) break;
+            if (new_director->ch_surname()) break;
+            if (new_director->ch_patronymic()) break;
+            if (new_director->ch_birthday()) break;
 
             directors_n_companies.push_back(new_director);
             break;
         }
         case 3: {
             std::cout << std::endl;
-            int num_of_comps = print_companies();
+            int num_of_comps = print_companies() - 1;
             std::cout << "Выберите: ";
             int choice = Input::int_(1, num_of_comps);
             if (choice == INT_MIN) break; choice--;
@@ -317,16 +319,16 @@ void ControlMenu::start() {
                         case 2:
                             director->fire_employers();
                             director->get_pnts(&accountant, &secretary, &guards, &electricians);
-                            system("pause");
+                            //system("pause");
                             break;
                         case 3:
                             director->hire_employers();
                             director->get_pnts(&accountant, &secretary, &guards, &electricians);
-                            system("pause");
+                            //system("pause");
                             break;
                         case 4:
                             director->change_company_name();
-                            system("pause");
+                            //system("pause");
                             break;
                         case 5:
                             director->ch_name();
@@ -364,7 +366,7 @@ void ControlMenu::start() {
                         {
                         case 1:
                             secretary->change_languages();
-                            system("pause");
+                            //system("pause");
                             break;
                         case 2:
                             secretary->print_employers();
@@ -421,7 +423,9 @@ void ControlMenu::start() {
                             salary_update(&electricians, &guards, &secretary, &director, &accountant);
                             break;
                         case 3: {
-                            double avg_slry = accountant->average_salary(guards->size(), electricians->size());
+                            int secret;
+                            secretary ? secret = 1: secret = 0;
+                            double avg_slry = accountant->average_salary(guards->size(), electricians->size(), secret);
                             std::cout << "Средняя зарплата: " << avg_slry << std::endl;
                             system("pause");
                             break;
@@ -570,7 +574,7 @@ void ControlMenu::start() {
                 }
             }
             //secretary->print_employers();
-            system("pause");
+            //system("pause");
             break;
         }
         case -1:

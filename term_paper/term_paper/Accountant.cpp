@@ -3,22 +3,31 @@
 
 //base
 
-void Accountant::ch_name()
+bool Accountant::ch_name()
 {
 	std::cout<<"¬ведите им€: ";
-	full_name[0] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[0] = temp;
+	return 0;
 };
 
-void  Accountant::ch_surname()
+bool  Accountant::ch_surname()
 {
 	std::cout << "¬ведите фамилию: ";
-	full_name[1] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[1] = temp;
+	return 0;
 };
 
-void Accountant::ch_patronymic()
+bool Accountant::ch_patronymic()
 {
 	std::cout << "¬ведите отчество: ";
-	full_name[2] = Input::name(25);
+	std::string temp = Input::name(25);
+	if (temp == "\n") return 1;
+	full_name[2] = temp;
+	return 1;
 };
 
 void Accountant::ch_salary(double slry)
@@ -37,14 +46,15 @@ int Accountant::get_salary()
 	return salary;
 };
 
-void Accountant::ch_birthday()
+bool Accountant::ch_birthday()
 {
 	auto now = std::chrono::system_clock::now();
 	std::chrono::year chrono_current_year = std::chrono::year_month_day{ floor<std::chrono::days>(now) }.year();
 	int current_year = static_cast<int>(chrono_current_year);
 
 	std::cout << "¬ведите день рождени€: ";
-	std::string temp = Input::date(1900, current_year);
+	std::string temp = Input::date(1900, current_year, 1);
+	if (temp == "\n") return 1;
 	std::string date[3];
 
 	date[0].push_back(temp[0]);
@@ -59,6 +69,7 @@ void Accountant::ch_birthday()
 	birthday[0] = std::stoi(date[2]);
 	birthday[1] = std::stoi(date[1]);
 	birthday[2] = std::stoi(date[0]);
+	return 0;
 };
 
 std::array<int, 3> Accountant::get_birthday()
@@ -221,9 +232,9 @@ inline std::array<double, 5> Accountant::salary_calculation() {
 	salary_rate[2] * base_salary[2], salary_rate[3] * base_salary[3], salary_rate[4] * base_salary[4], };
 }
 
-double Accountant::average_salary(int guards, int electricians) {
+double Accountant::average_salary(int guards, int electricians, int secretary) {
 	std::array<double, 5> salaries = salary_calculation();
-	double sum = salaries[0] + salaries[1] + salaries[2] + salaries[3] * guards + salaries[4] * electricians;
+	double sum = salaries[0] + salaries[1] + salaries[2] * secretary + salaries[3] * guards + salaries[4] * electricians;
 	int num_of_workers = 3 + guards + electricians;
 	return sum / num_of_workers;
 }
