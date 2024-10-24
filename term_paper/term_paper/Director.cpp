@@ -1,7 +1,6 @@
 #include "Director.h"
 
-//base
-
+//BASE
 bool Director::ch_name()
 {
 	std::cout << "¬ведите им€: ";
@@ -10,7 +9,6 @@ bool Director::ch_name()
 	full_name[0] = temp;
 	return 0;
 };
-
 bool  Director::ch_surname()
 {
 	std::cout << "¬ведите фамилию: ";
@@ -19,7 +17,6 @@ bool  Director::ch_surname()
 	full_name[1] = temp;
 	return 0;
 };
-
 bool Director::ch_patronymic()
 {
 	std::cout << "¬ведите отчество: ";
@@ -29,37 +26,15 @@ bool Director::ch_patronymic()
 	return 0;
 };
 
-void Director::ch_salary(double slry)
-{
-	salary = slry;
-};
-
-int Director::print_guards() {
-	//Guards
-	if ((*guards).size() > 0) {
-		int iter = 1;
-		std::cout << "ќхранники:" << std::endl;
-		for (Guard& guard : *guards) {
-			std::array<std::string, 3> guard_full_name = guard.get_fullname();
-			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
-		}
-	}
-	else std::cout << "ќхранники отсутствуют" << std::endl;
-	return guards->size();
+bool Director::ch_salary_rate(double slry_rate) {
+	std::cout << "¬ведите ставку: ";
+	double temp = Input::double_(0.01, 1, 2);
+	if (temp == DBL_MIN) return 1;
+	salary_rate = temp;
+	return 0;
 }
-
-int Director::print_electricians() {
-	//Electricians
-	if ((*electricians).size() > 0) {
-		int iter = 1;
-		std::cout << "Ёлектрики:" << std::endl;
-		for (Electrician& electrician : *electricians) {
-			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
-			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
-		}
-	}
-	else std::cout << "Ёлектрики отсутствуют" << std::endl;
-	return electricians->size();
+double Director::get_salary_rate() {
+	return salary_rate;
 }
 
 std::array<std::string, 3> Director::get_fullname()
@@ -67,6 +42,10 @@ std::array<std::string, 3> Director::get_fullname()
 	return full_name;
 };
 
+void Director::ch_salary(double slry)
+{
+	salary = slry;
+};
 int Director::get_salary()
 {
 	return salary;
@@ -79,7 +58,7 @@ bool Director::ch_birthday()
 	int current_year = static_cast<int>(chrono_current_year);
 
 	std::cout << "¬ведите день рождени€: ";
-	std::string temp = Input::date(1900, current_year, 1);
+	std::string temp = Input::date(1900, current_year - 14, 1);
 	if (temp == "\n") return 1;
 	std::string date[3];
 
@@ -92,12 +71,11 @@ bool Director::ch_birthday()
 	date[2].push_back(temp[8]);
 	date[2].push_back(temp[9]);
 
-	birthday[0] = std::stoi(date[2]);
+	birthday[0] = std::stoi(date[0]);
 	birthday[1] = std::stoi(date[1]);
-	birthday[2] = std::stoi(date[0]);
+	birthday[2] = std::stoi(date[2]);
 	return 0;
 };
-
 std::array<int, 3> Director::get_birthday()
 {
 	return birthday;
@@ -124,47 +102,7 @@ Director::~Director()
 	delete secretary;
 	delete accountant;
 }
-
-//base
-
-void Director::print_employers() 
-{
-	//Secretary
-	if (secretary) {
-		std::array<std::string, 3> secretary_full_name = secretary->get_fullname();
-		std::cout << "—екретарь: " << secretary_full_name[0] << " " << secretary_full_name[1] << " " << secretary_full_name[2] << std::endl;
-	}
-	else std::cout << "—екретарь отсутствует" << std::endl;
-
-	//Accountant
-	if (accountant) {
-		std::array<std::string, 3> accountant_full_name = accountant->get_fullname();
-		std::cout << "Ѕухгалтер: " << accountant_full_name[0] << " " << accountant_full_name[1] << " " << accountant_full_name[2] << std::endl;
-	}
-	else std::cout << "Ѕухгалтер отсутствует" << std::endl;
-
-	//Guards
-	if ((*guards).size() > 0) {
-		int iter = 1;
-		std::cout << "ќхранники:" << std::endl;
-		for (Guard& guard : *guards) {
-			std::array<std::string, 3> guard_full_name = guard.get_fullname();
-			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
-		}
-	}
-	else std::cout << "ќхранники отсутствуют" << std::endl;
-
-	//Electricians
-	if ((*electricians).size() > 0) {
-		int iter = 1;
-		std::cout << "Ёлектрики:" << std::endl;
-		for (Electrician& electrician : *electricians) {
-			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
-			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
-		}
-	}
-	else std::cout << "Ёлектрики отсутствуют" << std::endl;
-}
+//BASE
 
 void Director::fire_employers() 
 {
@@ -221,7 +159,6 @@ void Director::fire_employers()
 		}
 	}
 }
-
 void Director::hire_employers()
 {
 	bool flag(true);
@@ -312,17 +249,14 @@ void Director::hire_employers(Accountant emp) {
 	accountant = new Accountant;
 	*accountant = emp;
 }
-
 void Director::hire_employers(Secretary emp) {
 	emp.pnt_initialization(electricians, guards, accountant);
 	secretary = new Secretary;
 	*secretary = emp;
 }
-
 void Director::hire_employers(Guard emp) {
 	guards->push_back(emp);
 }
-
 void Director::hire_employers(Electrician emp) {
 	electricians->push_back(emp);
 }
@@ -337,11 +271,79 @@ void Director::get_pnts(Accountant** accountant_, Secretary** secretary_, std::v
 std::string Director::get_company_name() {
 	return company_name;
 }
-
+bool Director::change_company_name(std::string name) {
+	company_name = name;
+	return 0;
+}
 bool Director::change_company_name() {
 	std::cout << "ƒл€ отмены нажмите esc\n¬ведите новое название компании: ";
 	std::string new_name = Input::str(100, 1);
 	if (new_name == "\n") return 1;
 	company_name = new_name;
 	return 0;
+}
+
+void Director::print_employers()
+{
+	//Secretary
+	if (secretary) {
+		std::array<std::string, 3> secretary_full_name = secretary->get_fullname();
+		std::cout << "—екретарь: " << secretary_full_name[0] << " " << secretary_full_name[1] << " " << secretary_full_name[2] << std::endl;
+	}
+	else std::cout << "—екретарь отсутствует" << std::endl;
+
+	//Accountant
+	if (accountant) {
+		std::array<std::string, 3> accountant_full_name = accountant->get_fullname();
+		std::cout << "Ѕухгалтер: " << accountant_full_name[0] << " " << accountant_full_name[1] << " " << accountant_full_name[2] << std::endl;
+	}
+	else std::cout << "Ѕухгалтер отсутствует" << std::endl;
+
+	//Guards
+	if ((*guards).size() > 0) {
+		int iter = 1;
+		std::cout << "ќхранники:" << std::endl;
+		for (Guard& guard : *guards) {
+			std::array<std::string, 3> guard_full_name = guard.get_fullname();
+			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
+		}
+	}
+	else std::cout << "ќхранники отсутствуют" << std::endl;
+
+	//Electricians
+	if ((*electricians).size() > 0) {
+		int iter = 1;
+		std::cout << "Ёлектрики:" << std::endl;
+		for (Electrician& electrician : *electricians) {
+			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
+			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
+		}
+	}
+	else std::cout << "Ёлектрики отсутствуют" << std::endl;
+}
+int Director::print_guards() {
+	//Guards
+	if ((*guards).size() > 0) {
+		int iter = 1;
+		std::cout << "ќхранники:" << std::endl;
+		for (Guard& guard : *guards) {
+			std::array<std::string, 3> guard_full_name = guard.get_fullname();
+			std::cout << '(' << iter++ << ") " << guard_full_name[0] << " " << guard_full_name[1] << " " << guard_full_name[2] << std::endl;
+		}
+	}
+	else std::cout << "ќхранники отсутствуют" << std::endl;
+	return guards->size();
+}
+int Director::print_electricians() {
+	//Electricians
+	if ((*electricians).size() > 0) {
+		int iter = 1;
+		std::cout << "Ёлектрики:" << std::endl;
+		for (Electrician& electrician : *electricians) {
+			std::array<std::string, 3> electrician_full_name = electrician.get_fullname();
+			std::cout << '(' << iter++ << ") " << electrician_full_name[0] << " " << electrician_full_name[1] << " " << electrician_full_name[2] << std::endl;
+		}
+	}
+	else std::cout << "Ёлектрики отсутствуют" << std::endl;
+	return electricians->size();
 }

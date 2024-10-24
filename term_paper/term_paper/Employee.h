@@ -20,6 +20,8 @@ public:
 
 	//change salary
 	virtual void ch_salary(double slry) = 0;
+	//change rate of salary
+	virtual bool ch_salary_rate(double slry_rate) = 0;
 
 	//Change bitrthday format(dd.mm.yyyy)
 	virtual bool ch_birthday() = 0;
@@ -31,6 +33,8 @@ public:
 
 	//get salary
 	virtual int get_salary() = 0;
+	//change rate of salary
+	virtual double get_salary_rate() = 0;
 
 	//get birthday (tm struct)
 	virtual std::array<int, 3> get_birthday() = 0;

@@ -13,6 +13,8 @@ class Secretary :
     int salary;
     //Birthday
     std::array<int, 3> birthday;
+    //Rate of salary
+    double salary_rate;
 
     //Languages known by Secretary
     std::vector<std::string> languages;
@@ -36,6 +38,8 @@ public:
 
     //change salary
     void ch_salary(double slry) override;
+    //change Rate of salary
+    bool ch_salary_rate(double slry_rate) override;
 
     //Change bitrthday format(dd.mm.yyyy)
     bool ch_birthday() override;
@@ -47,6 +51,8 @@ public:
 
     //get salary
     int get_salary() override;
+    //get rate of salary
+    double get_salary_rate() override;
 
     //get birthday (tm struct)
     std::array<int, 3> get_birthday() override;

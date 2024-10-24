@@ -1,8 +1,8 @@
 #include "Accountant.h"
 #include "inputlib.h"
+#include "Secretary.h"
 
-//base
-
+//BASE
 bool Accountant::ch_name()
 {
 	std::cout<<"Введите имя: ";
@@ -53,7 +53,7 @@ bool Accountant::ch_birthday()
 	int current_year = static_cast<int>(chrono_current_year);
 
 	std::cout << "Введите день рождения: ";
-	std::string temp = Input::date(1900, current_year, 1);
+	std::string temp = Input::date(1900, current_year - 14, 1);
 	if (temp == "\n") return 1;
 	std::string date[3];
 
@@ -66,9 +66,9 @@ bool Accountant::ch_birthday()
 	date[2].push_back(temp[8]);
 	date[2].push_back(temp[9]);
 
-	birthday[0] = std::stoi(date[2]);
+	birthday[0] = std::stoi(date[0]);
 	birthday[1] = std::stoi(date[1]);
-	birthday[2] = std::stoi(date[0]);
+	birthday[2] = std::stoi(date[2]);
 	return 0;
 };
 
@@ -98,70 +98,82 @@ Accountant::Accountant()
 	salary_rate = { 1,1,1,1,1 };
 	birthday = { 0,0,0 };
 };
-//base
+//BASE
 
-std::array<double, 5> Accountant::get_salary_rate() {
+//std::array<double, 5> Accountant::get_salary_rate() {
+//	return salary_rate;
+//}
+
+bool Accountant::ch_salary_rate(double slry_rate) {
+	std::cout << "Введите ставку: ";
+	double temp = Input::double_(0.01, 1, 2);
+	if (temp == DBL_MIN) return 1;
+	salary_rate = temp;
+	return 0;
+}
+
+double Accountant::get_salary_rate() {
 	return salary_rate;
 }
 
-void Accountant::ch_salary_rate() {
-	bool flag(true);
-	while (flag)
-	{
-		system("cls");
-		std::cout << "Ставки по должностям: " << std::endl;
-		std::cout << "(1) Директор: " << salary_rate[0] << std::endl;
-		std::cout << "(2) Бухгалтер: " << salary_rate[1] << std::endl;
-		std::cout << "(3) Секретарь: " << salary_rate[2] << std::endl;
-		std::cout << "(4) Охранник: " << salary_rate[3] << std::endl;
-		std::cout << "(5) Электрик: " << salary_rate[4] << std::endl;
-
-		std::cout << "Для выхода нажмите Esc\nВыберите должность, ставку которой вы хотите изменить" << std::endl;
-		switch (Input::choice(1, 5))
-		{
-		case 1: {
-			std::cout << "Введите новую ставку для Директора: ";
-			double new_rate = Input::double_(0.1, 100000);
-			if (new_rate == DBL_MIN) break;
-			salary_rate[0] = new_rate;
-			break;
-		}
-		case 2: {
-			std::cout << "Введите новую ставку для Бухгалтера: ";
-			double new_rate = Input::double_(0.1, 100000);
-			if (new_rate == DBL_MIN) break;
-			salary_rate[1] = new_rate;
-			break;
-		}
-		case 3: {
-			std::cout << "Введите новую ставку для Секретаря: ";
-			double new_rate = Input::double_(0.1, 100000);
-			if (new_rate == DBL_MIN) break;
-			salary_rate[2] = new_rate;
-			break;
-		}
-		case 4: {
-			std::cout << "Введите новую ставку для Охранника: ";
-			double new_rate = Input::double_(0.1, 100000);
-			if (new_rate == DBL_MIN) break;
-			salary_rate[3] = new_rate;
-			break;
-		}
-		case 5: {
-			std::cout << "Введите новую ставку для Электрика: ";
-			double new_rate = Input::double_(0.1, 100000);
-			if (new_rate == DBL_MIN) break;
-			salary_rate[4] = new_rate;
-			break;
-		}
-		case -1:
-			flag = false;
-			break;
-		default:
-			break;
-		}
-	}
-}
+//void Accountant::ch_salary_rate() {
+//	bool flag(true);
+//	while (flag)
+//	{
+//		system("cls");
+//		std::cout << "Ставки по должностям: " << std::endl;
+//		std::cout << "(1) Директор: " << salary_rate[0] << std::endl;
+//		std::cout << "(2) Бухгалтер: " << salary_rate[1] << std::endl;
+//		std::cout << "(3) Секретарь: " << salary_rate[2] << std::endl;
+//		std::cout << "(4) Охранник: " << salary_rate[3] << std::endl;
+//		std::cout << "(5) Электрик: " << salary_rate[4] << std::endl;
+//
+//		std::cout << "Для выхода нажмите Esc\nВыберите должность, ставку которой вы хотите изменить" << std::endl;
+//		switch (Input::choice(1, 5))
+//		{
+//		case 1: {
+//			std::cout << "Введите новую ставку для Директора: ";
+//			double new_rate = Input::double_(0.1, 1);
+//			if (new_rate == DBL_MIN) break;
+//			salary_rate[0] = new_rate;
+//			break;
+//		}
+//		case 2: {
+//			std::cout << "Введите новую ставку для Бухгалтера: ";
+//			double new_rate = Input::double_(0.1, 1);
+//			if (new_rate == DBL_MIN) break;
+//			salary_rate[1] = new_rate;
+//			break;
+//		}
+//		case 3: {
+//			std::cout << "Введите новую ставку для Секретаря: ";
+//			double new_rate = Input::double_(0.1, 1);
+//			if (new_rate == DBL_MIN) break;
+//			salary_rate[2] = new_rate;
+//			break;
+//		}
+//		case 4: {
+//			std::cout << "Введите новую ставку для Охранника: ";
+//			double new_rate = Input::double_(0.1, 1);
+//			if (new_rate == DBL_MIN) break;
+//			salary_rate[3] = new_rate;
+//			break;
+//		}
+//		case 5: {
+//			std::cout << "Введите новую ставку для Электрика: ";
+//			double new_rate = Input::double_(0.1, 1);
+//			if (new_rate == DBL_MIN) break;
+//			salary_rate[4] = new_rate;
+//			break;
+//		}
+//		case -1:
+//			flag = false;
+//			break;
+//		default:
+//			break;
+//		}
+//	}
+//}
 
 std::array<int, 5> Accountant::get_base_salary() {
 	return base_salary;
@@ -227,10 +239,11 @@ void Accountant::ch_base_salary() {
 }
 
 //0 - Director, 1 - Accountant, 2 - Secretary, 3 - Security, 4 - Electrician
-inline std::array<double, 5> Accountant::salary_calculation() {
-	return {salary_rate[0] * base_salary[0], salary_rate[1] * base_salary[1], 
-	salary_rate[2] * base_salary[2], salary_rate[3] * base_salary[3], salary_rate[4] * base_salary[4], };
-}
+//inline std::array<double, 5> Accountant::salary_calculation() {
+//	Secretary Secretary;
+//	return {salary_rate[0] * base_salary[0], salary_rate[1] * base_salary[1], 
+//	salary_rate[2] * base_salary[2], salary_rate[3] * base_salary[3], salary_rate[4] * base_salary[4], };
+//}
 
 double Accountant::average_salary(int guards, int electricians, int secretary) {
 	std::array<double, 5> salaries = salary_calculation();

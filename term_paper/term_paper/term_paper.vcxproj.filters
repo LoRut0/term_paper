@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\inputlib">
-      <UniqueIdentifier>{7b952ecd-dca0-4f4d-b949-f3414c5c52a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\inputlib">
-      <UniqueIdentifier>{5af8db11-a4fd-4a10-8398-802bc312646b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="term_paper.cpp">
@@ -41,12 +35,6 @@
     </ClCompile>
     <ClCompile Include="Electrician.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="inputlib.cpp">
-      <Filter>Source Files\inputlib</Filter>
-    </ClCompile>
-    <ClCompile Include="private.cpp">
-      <Filter>Source Files\inputlib</Filter>
     </ClCompile>
     <ClCompile Include="ControlMenu.cpp">
       <Filter>Source Files</Filter>
@@ -73,12 +61,6 @@
     </ClInclude>
     <ClInclude Include="Electrician.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="inputlib.h">
-      <Filter>Header Files\inputlib</Filter>
-    </ClInclude>
-    <ClInclude Include="private.h">
-      <Filter>Header Files\inputlib</Filter>
     </ClInclude>
     <ClInclude Include="ControlMenu.h">
       <Filter>Header Files</Filter>

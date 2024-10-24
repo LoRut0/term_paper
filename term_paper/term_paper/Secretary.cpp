@@ -2,7 +2,6 @@
 #include <iomanip>
 
 //base
-
 bool Secretary::ch_name()
 {
 	std::cout << "Введите имя: ";
@@ -35,7 +34,6 @@ void Secretary::ch_salary(double slry)
 	salary = slry;
 };
 
-
 std::array<std::string, 3> Secretary::get_fullname()
 {
 	return full_name;
@@ -46,6 +44,14 @@ int Secretary::get_salary()
 	return salary;
 };
 
+bool Secretary::ch_salary_rate(double slry_rate) {
+	std::cout << "Введите ставку: ";
+	double temp = Input::double_(0.01, 1, 2);
+	if (temp == DBL_MIN) return 1;
+	salary_rate = temp;
+	return 0;
+}
+
 bool Secretary::ch_birthday()
 {
 	auto now = std::chrono::system_clock::now();
@@ -53,7 +59,7 @@ bool Secretary::ch_birthday()
 	int current_year = static_cast<int>(chrono_current_year);
 
 	std::cout << "Введите день рождения: ";
-	std::string temp = Input::date(1900, current_year, 1);
+	std::string temp = Input::date(1900, current_year - 14, 1);
 	if (temp == "\n") return 1;
 	std::string date[3];
 
@@ -66,9 +72,9 @@ bool Secretary::ch_birthday()
 	date[2].push_back(temp[8]);
 	date[2].push_back(temp[9]);
 
-	birthday[0] = std::stoi(date[2]);
+	birthday[0] = std::stoi(date[0]);
 	birthday[1] = std::stoi(date[1]);
-	birthday[2] = std::stoi(date[0]);
+	birthday[2] = std::stoi(date[2]);
 	return 0;
 };
 
@@ -95,7 +101,6 @@ Secretary::Secretary()
 
 	birthday = { 0,0,0 };
 };
-
 //base
 
 void Secretary::print_languages() {
@@ -154,43 +159,43 @@ void Secretary::change_languages() {
 	}
 }
 
-
-//PRINT NEED TO ADD TABLE!!!!!!!!!!!!!!!!!!
 void Secretary::print_employers() {
 	//Accountant
 	if (accountant) {
-		std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+" << std::endl;
-		std::cout << "|                                                Бухгалтер                                                |" << std::endl;
-		std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+" << std::endl;
+		std::cout << "+-----------------------------+-----------------------------+-----------------------------+-----------------+--------------+" << std::endl;
+		std::cout << "|                                                          Бухгалтер                                                       |" << std::endl;
+		std::cout << "+-----------------------------+-----------------------------+-----------------------------+-----------------+--------------+" << std::endl;
 		std::cout << std::setfill(' ') << std::left << std::setw(30) << "| Имя " << std::setw(30) << "| Фамилия " << std::setw(30) << "| Отчество" <<
-			std::setw(16) << "| День рождения " << std::setw(1) << '|' << std::endl;
-		std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+" << std::endl;
+			std::setw(16) << "| День рождения " << std::setw(17) << "| Зарплата (руб)" << std::setw(1) << '|' << std::endl;
+		std::cout << "+-----------------------------+-----------------------------+-----------------------------+-----------------+--------------+" << std::endl;
 		std::array<std::string, 3> full_name = accountant->get_fullname();
 		std::array<int, 3> birthday = accountant->get_birthday();
+		int salary = accountant->get_salary();
 		std::cout << "| " << std::setw(28) << full_name[0] << "| " << std::setw(28) << full_name[1] << "| " << std::setw(28) << full_name[2] << "| " <<
 			std::right << std::setfill('0') << std::setw(2) << birthday[0] << '.' << std::setw(2) << birthday[1] << '.' << std::setw(2) << birthday[2] <<
-			std::left << std::setfill(' ') << "    |" << std::endl;
-		std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+" << std::endl;
+			std::left << std::setfill(' ') << "    | " << std::setw(15) << salary << '|' << std::endl;
+		std::cout << "+-----------------------------+-----------------------------+-----------------------------+-----------------+--------------+" << std::endl;
 		std::cout << std::endl;
 	}
 
 	//Secretary
-	std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+-----------------------------+" << std::endl;
-	std::cout << "|                                                               Секретарь                                                               |" << std::endl;
-	std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+-----------------------------+" << std::endl;
+	std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+-----------------------------+" << std::endl;
+	std::cout << "|                                                                         Секретарь                                                                      |" << std::endl;
+	std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+-----------------------------+" << std::endl;
 	std::cout << std::setfill(' ') << std::left << std::setw(30) << "| Имя " << std::setw(30) << "| Фамилия " << std::setw(30) << "| Отчество" <<
-		std::setw(16) << "| День рождения " << std::setw(30) << "| Языки " << std::setw(1) << '|' << std::endl;
-	std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+-----------------------------+" << std::endl;
+		std::setw(16) << "| День рождения " << std::setw(17) << "| Зарплата (руб)" << std::setw(30) << "| Языки " << std::setw(1) << '|' << std::endl;
+	std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+-----------------------------+" << std::endl;
 	std::array<std::string, 3> full_name = this->get_fullname();
 	std::array<int, 3> birthday = this->get_birthday();
+	int salary = this->get_salary();
 	std::cout << "| " << std::setw(28) << full_name[0] << "| " << std::setw(28) << full_name[1] << "| " << std::setw(28) << full_name[2] << "| " <<
 		std::right << std::setfill('0') << std::setw(2) << birthday[0] << '.' << std::setw(2) << birthday[1] << '.' << std::setw(2) << birthday[2] <<
-		std::left << std::setfill(' ') << "    | ";
+		std::left << std::setfill(' ') <<  "    | " << std::setw(15) << salary << "| ";
 	std::cout << std::setw(28) << languages[0] << '|' << std::endl;
 	if (languages.size() > 1) for (int i = 1; i < languages.size(); i++) {
-		std::cout << "|                             |                             |                             |               | " << std::setw(28) << languages[i] << '|' << std::endl;
+		std::cout << "|                             |                             |                             |               |                | " << std::setw(28) << languages[i] << '|' << std::endl;
 	}
-	std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+-----------------------------+" << std::endl;
+	std::cout << "+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+-----------------------------+" << std::endl;
 	std::cout << std::endl;
 
 	//Guards
@@ -207,18 +212,19 @@ void Secretary::print_guards() {
 		std::cout << "Охранники отсутствуют" << std::endl;
 		return;
 	}
-	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+-----------------------------+------------------------+" << std::endl;
-	std::cout << "|                                                                               Охранники                                                                                |" << std::endl;
-	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+-----------------------------+------------------------+" << std::endl;
+	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+-----------------------------+------------------------+" << std::endl;
+	std::cout << "|                                                                                       Охранники                                                                                         |" << std::endl;
+	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+-----------------------------+------------------------+" << std::endl;
 	std::cout << std::setfill(' ') << std::left << std::setw(8) << "| Номер " << std::setw(30) << "| Имя " << std::setw(30) << "| Фамилия " << std::setw(30) << "| Отчество" <<
-		std::setw(16) << "| День рождения " << std::setw(30) << "| Спец. инструммент " << std::setw(25) << "| Смена " << std::setw(1) << '|' << std::endl;
-	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+-----------------------------+------------------------+" << std::endl;
+		std::setw(16) << "| День рождения " << std::setw(17) << "| Зарплата (руб)" << std::setw(30) << "| Спец. инструммент " << std::setw(25) << "| Смена " << std::setw(1) << '|' << std::endl;
+	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+-----------------------------+------------------------+" << std::endl;
 
 	int iter = 1;
 	for (Guard& guard : *guards) {
 		std::array<std::string, 3> full_name = guard.get_fullname();
 		std::array<int, 3> birthday = guard.get_birthday();
 		std::string shift;
+		int salary = guard.get_salary();
 		switch (guard.get_shift())
 		{
 		case 1:
@@ -235,8 +241,8 @@ void Secretary::print_guards() {
 		}
 		std::cout << "| " << std::setw(6) << iter++ << "| " << std::setw(28) << full_name[0] << "| " << std::setw(28) << full_name[1] << "| " << std::setw(28) << full_name[2] << "| " <<
 			std::right << std::setfill('0') << std::setw(2) << birthday[0] << '.' << std::setw(2) << birthday[1] << '.' << std::setw(2) << birthday[2] <<
-			std::left << std::setfill(' ') << "    | " << std::setw(28) << guard.get_weapon() << "| " << std::setw(23) << shift << '|' << std::endl;
-		std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+-----------------------------+------------------------+" << std::endl;
+			std::left << std::setfill(' ') << "    | " << std::setw(15) << salary << "| " << std::setw(28) << guard.get_weapon() << "| " << std::setw(23) << shift << '|' << std::endl;
+		std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+-----------------------------+------------------------+" << std::endl;
 	}
 	return;
 }
@@ -247,21 +253,22 @@ void Secretary::print_electricians() {
 		std::cout << "Электрики отсутствуют" << std::endl;
 		return;
 	}
-	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+--------+" << std::endl;
-	std::cout << "|                                                         Электрики                                                        |" << std::endl;
-	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+--------+" << std::endl;
+	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+--------+" << std::endl;
+	std::cout << "|                                                                 Электрики                                                                 |" << std::endl;
+	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+--------+" << std::endl;
 	std::cout << std::setfill(' ') << std::left << std::setw(8) << "| Номер " << std::setw(30) << "| Имя " << std::setw(30) << "| Фамилия " << std::setw(30) << "| Отчество" <<
-		std::setw(16) << "| День рождения " << std::setw(9) << "| Разряд " << std::setw(1) << '|' << std::endl;
-	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+--------+" << std::endl;
+		std::setw(16) << "| День рождения " << std::setw(17) << "| Зарплата (руб)" << std::setw(9) << "| Разряд " << std::setw(1) << '|' << std::endl;
+	std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+--------+" << std::endl;
 
 	int iter = 1;
 	for (Electrician& electrician : *electricians) {
 		std::array<std::string, 3> full_name = electrician.get_fullname();
 		std::array<int, 3> birthday = electrician.get_birthday();
+		int salary = electrician.get_salary();
 		std::cout << "| " << std::setw(6) << iter++ << "| " << std::setw(28) << full_name[0] << "| " << std::setw(28) << full_name[1] << "| " << std::setw(28) << full_name[2] << "| " <<
 			std::right << std::setfill('0') << std::setw(2) << birthday[0] << '.' << std::setw(2) << birthday[1] << '.' << std::setw(2) << birthday[2] <<
-			std::left << std::setfill(' ') << "    | " << std::setw(7) << electrician.get_category() << '|' << std::endl;
-		std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+--------+" << std::endl;
+			std::left << std::setfill(' ') << "    | " << std::setw(15) << salary << "| " << std::setw(7) << electrician.get_category() << '|' << std::endl;
+		std::cout << "+-------+-----------------------------+-----------------------------+-----------------------------+---------------+----------------+--------+" << std::endl;
 	}
 	return;
 }

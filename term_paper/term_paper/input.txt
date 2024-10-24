@@ -5,7 +5,7 @@
 //Guard; Имя, Фамилия, Отчество; dd.mm.yyyy; special_tool; shift(1;3);
 
 Director; Igor, Peganov, Nikolaevich; 23.07.2005; KLHZ inc.;
-Accountant; Gocha, Chivchyan, Georgievich; 12.04.1984; 100, 200, 300, 400, 500; 1; 2,3; 4,4; 0,2; 3;
+Accountant; Gocha, Chivchyan, Georgievich; 12.04.1984; 500, 400, 300, 200, 100; 1; 2,3; 4,4; 0,2; 3;
 Secretary; Arkadiy, Tsaregratsev, Petrovich; 05.12.1982; Russian, English, Japanese;
 Guard; Alexandr, Alexandrov, Alexandrovich; 12.12.1998; Pistol; 1;
 Guard; Oleg, Musorgskiy, Olegovich; 11.11.1980; Stick; 2;

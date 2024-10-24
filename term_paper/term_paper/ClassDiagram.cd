@@ -3,43 +3,50 @@
   <Class Name="Accountant">
     <Position X="5.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAFQAUCQAnAgAAAAAAAIgAAAAAAIAEBAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAFQAUCQAnAgAAAAAAAIgAAAAAAYAEBAAAAAAAAAA=</HashCode>
       <FileName>Accountant.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Director">
     <Position X="7.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAARAAAAAgAQAAIAAQIAgIAAAAAAAQAAAAAAAAACg=</HashCode>
+      <HashCode>IAAAERAECAAkAwAAIAAQIQgMAAAIAAAUBAAAAAAAEAg=</HashCode>
       <FileName>Director.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Electrician" Collapsed="true">
+  <Class Name="Electrician">
     <Position X="12" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAASAAAAAgFAAAAAAAAAgAAABAAAgAAAAIAAAAAAA=</HashCode>
+      <HashCode>IABAESAECAAkEgAAAAAAAAgAAAAAAAAEBAAIAAAAAAA=</HashCode>
       <FileName>Electrician.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Employee">
-    <Position X="9.75" Y="3" Width="1.5" />
+    <Position X="9.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAEAAECAAEAgAAAAAAAAAAAAAAAAAEBAAAAAAAAAA=</HashCode>
       <FileName>Employee.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Secretary" Collapsed="true">
-    <Position X="10" Y="5.75" Width="1.5" />
+  <Class Name="Secretary">
+    <Position X="9.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAQABAAAgAAAAAAAAAAgEAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>IAAAEQAFCAAkAigAIAAQAAgEAAAIAAAEBICAAAAAAAA=</HashCode>
       <FileName>Secretary.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Guard" Collapsed="true">
+  <Class Name="Guard">
     <Position X="14.25" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAAAAQAAAAAgABAAAAAAAAgAKAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>MAAAEQAECAAkAhAAAAEAAAgAKAAAAAAkBAAAAAAAAAA=</HashCode>
       <FileName>Guard.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ControlMenu">
+    <Position X="17" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAoAAAgAIgUAAAAAAgQQAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ControlMenu.h</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -10,13 +10,15 @@ class Accountant :
     double salary;
     //Birthday
     std::array<int, 3> birthday;
+    //Rate of salary
+    double salary_rate;
 
     /*Base salaries
     0 - Director, 1 - Accountant, 2 - Secretary, 3 - Security, 4 - Electrician*/
     std::array<int, 5> base_salary;
     /*Salary rates
     0 - Director, 1 - Accountant, 2 - Secretary, 3 - Security, 4 - Electrician*/
-    std::array<double, 5> salary_rate;
+    //std::array<double, 5> salary_rate;
 
     //fuction that changes salaries of employees
     std::array<double, 5> salary_calculation();
@@ -32,6 +34,8 @@ public:
 
     //change salary
     void ch_salary(double slry) override;
+    //change Rate of salary
+    bool ch_salary_rate(double slry_rate) override;
 
     //Change bitrthday format(dd.mm.yyyy)
     bool ch_birthday() override;
@@ -43,6 +47,8 @@ public:
 
     //get salary
     int get_salary() override;
+    //get rate of salary
+    double get_salary_rate() override;
 
     //get birthday (tm struct)
     std::array<int, 3> get_birthday() override;
@@ -51,11 +57,6 @@ public:
     Accountant(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::array<int, 5> base_slry, std::array<double, 5> slry_rate);
     Accountant();
 //BASE
-
-    //get salary rate
-    std::array<double, 5> get_salary_rate();
-    //change salary rate
-    void ch_salary_rate();
 
     //change base salary
     void ch_base_salary();

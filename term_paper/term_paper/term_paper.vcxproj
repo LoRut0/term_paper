@@ -77,7 +77,7 @@
     <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\loruto\Desktop\MPEI\Programming\inputlib\input;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
@@ -148,8 +148,6 @@
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Electrician.cpp" />
     <ClCompile Include="Employee.cpp" />
-    <ClCompile Include="inputlib.cpp" />
-    <ClCompile Include="private.cpp" />
     <ClCompile Include="Secretary.cpp" />
     <ClCompile Include="Guard.cpp" />
     <ClCompile Include="term_paper.cpp" />
@@ -161,13 +159,16 @@
     <ClInclude Include="Electrician.h" />
     <ClInclude Include="Employee.h" />
     <ClInclude Include="Includes.h" />
-    <ClInclude Include="inputlib.h" />
-    <ClInclude Include="private.h" />
     <ClInclude Include="Secretary.h" />
     <ClInclude Include="Guard.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Users\loruto\Desktop\MPEI\Programming\inputlib\input\input.vcxproj">
+      <Project>{b0178e33-a731-4c82-b970-e2ee3e7ea98e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

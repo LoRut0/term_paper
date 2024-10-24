@@ -52,7 +52,7 @@ bool Guard::ch_birthday()
 	int current_year = static_cast<int>(chrono_current_year);
 
 	std::cout << "¬ведите день рождени€: ";
-	std::string temp = Input::date(1900, current_year, 1);
+	std::string temp = Input::date(1900, current_year - 14, 1);
 	if (temp == "\n") return 1;
 	std::string date[3];
 
@@ -65,9 +65,9 @@ bool Guard::ch_birthday()
 	date[2].push_back(temp[8]);
 	date[2].push_back(temp[9]);
 
-	birthday[0] = std::stoi(date[2]);
+	birthday[0] = std::stoi(date[0]);
 	birthday[1] = std::stoi(date[1]);
-	birthday[2] = std::stoi(date[0]);
+	birthday[2] = std::stoi(date[2]);
 	return 0;
 };
 
@@ -105,7 +105,7 @@ std::string Guard::get_weapon() {
 
 bool Guard::ch_weapon() {
 	std::cout << "¬ведите спец. средство охранника: ";
-	std::string new_weapon = Input::str(100);
+	std::string new_weapon = Input::str(25);
 	if (new_weapon == "\n") return 1;
 	weapon = new_weapon;
 	return 0;
