@@ -1,4 +1,9 @@
 #include "Director.h"
+#include "Electrician.h"
+#include "Guard.h"
+#include "Secretary.h"
+#include "Accountant.h"
+#include "inputlib.h"
 
 //BASE
 bool Director::ch_name()
@@ -25,18 +30,6 @@ bool Director::ch_patronymic()
 	full_name[2] = temp;
 	return 0;
 };
-
-bool Director::ch_salary_rate(double slry_rate) {
-	std::cout << "Введите ставку: ";
-	double temp = Input::double_(0.01, 1, 2);
-	if (temp == DBL_MIN) return 1;
-	salary_rate = temp;
-	return 0;
-}
-double Director::get_salary_rate() {
-	return salary_rate;
-}
-
 std::array<std::string, 3> Director::get_fullname()
 {
 	return full_name;
@@ -46,7 +39,7 @@ void Director::ch_salary(double slry)
 {
 	salary = slry;
 };
-int Director::get_salary()
+double Director::get_salary()
 {
 	return salary;
 };
@@ -81,14 +74,9 @@ std::array<int, 3> Director::get_birthday()
 	return birthday;
 };
 
-Director::Director(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::string comp_name)
+Director::Director(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, std::string comp_name) : 
+	full_name(full_name), salary(1), salary_rate(1), birthday(input_birthday), company_name(comp_name), temp_accountant()
 {
-	this->full_name = full_name;
-	salary = 1;
-	
-	birthday = input_birthday;
-	company_name = comp_name;
-
 	electricians = new std::vector<Electrician>;
 	guards = new std::vector<Guard>;
 	secretary = NULL;
@@ -98,11 +86,22 @@ Director::Director(std::array<std::string, 3> full_name, std::array<int, 3> inpu
 Director::~Director() 
 {
 	delete electricians;
+	electricians = NULL;
 	delete guards;
+	guards = NULL;
 	delete secretary;
+	secretary = NULL;
 	delete accountant;
+	accountant = NULL;
 }
 //BASE
+
+double Director::salary_rate_input() {
+	std::cout << "Введите ставку сотрудника: ";
+	double temp = Input::double_(0.01, 1, 2);
+	if (temp == DBL_MIN) return DBL_MIN;
+	return temp;
+}
 
 void Director::fire_employers() 
 {
@@ -111,44 +110,54 @@ void Director::fire_employers()
 	{
 		system("cls");
 		print_employers();
-		std::cout << "(Esc) Назад\n(1) Уволить секретаря\n(2) Уволить бухгалтера\n(3) Уволить охранника\n(4) Уволить электрика" << std::endl;
-		int choice = Input::choice();
+		std::cout << "(Esc) Назад\n";
+		if (secretary) std::cout << "(1) Уволить секретаря\n";
+		if (accountant) std::cout << "(2) Уволить бухгалтера\n";
+		if (guards->size() > 0) std::cout << "(3) Уволить охранника\n";
+		if (electricians->size() > 0) std::cout << "(4) Уволить электрика\n";
+		int choice = Input::choice(1, 4);
 
 		switch (choice)
 		{
 		case 1: {
 			if (!secretary) break;
 			std::cout << "Подтвердите увольнение секретаря (1) - Да, (0) - Нет" << std::endl;
-			if (Input::bool_('0', '1') and secretary) secretary = NULL;
+			if (Input::bool_('0', '1')) secretary = NULL;
 			break;
 		}
 		case 2: {
 			if (!accountant) break;
 			std::cout << "Подтвердите увольнение бухгалтера (1) - Да, (0) - Нет" << std::endl;
-			if (Input::bool_('0', '1') and accountant) {
-				accountant = NULL;
-				if (secretary) secretary->pnt_initialization(electricians, guards, accountant);
-			}
+			temp_accountant = *accountant;
+			if (Input::bool_('0', '1')) accountant = NULL;
 			break;
 		}
 		case 3: {
-			if ((*guards).size() == 0) break;
+			if (guards->size() == 0) break;
 			std::cout << "Введите номер охранника, которого хотите уволить: ";
-			int number = Input::int_(1, (*guards).size());
+			int number = Input::int_(1, guards->size());
 			if (number == INT_MIN) break;
 
 			std::cout << "Подтвердите увольнение охранника " << number-- << " (1) - Да, (0) - Нет" << std::endl;
-			if (Input::bool_('0', '1')) (*guards).erase((*guards).begin() + number);
+			if (Input::bool_('0', '1')) {
+				guards->erase(guards->begin() + number);
+				if (!accountant) temp_accountant.salary_rate_delete(3, number);
+				else accountant->salary_rate_delete(3, number);
+			}
 			break;
 		}
 		case 4: {
-			if ((*electricians).size() == 0) break;
+			if (electricians->size() == 0) break;
 			std::cout << "Введите номер электрика, которого хотите уволить: ";
-			int number = Input::int_(1, (*electricians).size());
+			int number = Input::int_(1, electricians->size());
 			if (number == INT_MIN) break;
 
 			std::cout << "Подтвердите увольнение электрика " << number-- << " (1) - Да, (0) - Нет" << std::endl;
-			if (Input::bool_('0', '1')) (*electricians).erase((*electricians).begin() + number);
+			if (Input::bool_('0', '1')) {
+				electricians->erase(electricians->begin() + number);
+				if (!accountant) temp_accountant.salary_rate_delete(4, number);
+				else accountant->salary_rate_delete(4, number);
+			}
 			break;
 		}
 		case -1:
@@ -168,12 +177,22 @@ void Director::hire_employers()
 		print_employers();
 		int choice;
 		if (secretary and accountant) {
-			std::cout << "(Esc) Назад\n(1) Нанять секретаря\n(2) Нанять бухгалтера\n(3) Нанять охранника\n(4) Нанять электрика" << std::endl;
+			std::cout << "(Esc) Назад\n(3) Нанять охранника\n(4) Нанять электрика" << std::endl;
 			choice = Input::choice(1, 4);
 		}
 		else {
-			std::cout << "(Esc) Назад\n(1) Нанять секретаря\n(2) Нанять бухгалтера\n" << std::endl;
-			choice = Input::choice(1, 2);
+			if (secretary) {
+				std::cout << "(Esc) Назад\n(2) Нанять бухгалтера\n" << std::endl;
+				choice = Input::choice(2, 2);
+			}
+			else if (accountant) {
+				std::cout << "(Esc) Назад\n(1) Нанять секретаря\n" << std::endl;
+				choice = Input::choice(1, 1);
+			}
+			else {
+				std::cout << "(Esc) Назад\n(1) Нанять секретаря\n(2) Нанять бухгалтера\n" << std::endl;
+				choice = Input::choice(1, 2);
+			}
 		}
 
 		switch (choice)
@@ -190,9 +209,18 @@ void Director::hire_employers()
 			if (new_secretary->ch_patronymic()) break;
 			if (new_secretary->ch_birthday()) break;
 			new_secretary->change_languages();
+			new_secretary->pnt_initialization(electricians, guards, accountant);
+
+			//Установка ставки для секретаря
+			if (accountant) {
+				system("cls");
+				std::array<std::string, 3> emp_full_name;
+				double temp_slry_rate = salary_rate_input();
+				if (temp_slry_rate == DBL_MIN) break;
+				accountant->salary_rate_add(2, temp_slry_rate);
+			}
 
 			secretary = new_secretary;
-			secretary->pnt_initialization(electricians, guards, accountant);
 			break;
 		}
 		case 2: {
@@ -202,15 +230,17 @@ void Director::hire_employers()
 				break;
 			}
 			Accountant* new_accountant = new Accountant;
+			*new_accountant = temp_accountant;
 			if (new_accountant->ch_name()) break;
 			if (new_accountant->ch_surname()) break;
 			if (new_accountant->ch_patronymic()) break;
 			if (new_accountant->ch_birthday()) break;
+			new_accountant->pnt_initialization(this, secretary, guards, electricians);
 			new_accountant->ch_base_salary();
-			new_accountant->ch_salary_rate();
+			new_accountant->ch_salary_rates();
 
 			accountant = new_accountant;
-			if (secretary) secretary->pnt_initialization(electricians, guards, accountant);
+			//if (secretary) secretary->pnt_initialization(electricians, guards, accountant);
 			break; 
 		}
 		case 3: {
@@ -222,7 +252,11 @@ void Director::hire_employers()
 			if (guard.ch_weapon()) break;
 			if (guard.ch_shift()) break;
 
+			double temp_slry_rate = salary_rate_input();
+			if (temp_slry_rate == DBL_MIN) break;
+
 			guards->push_back(guard);
+			accountant->salary_rate_add(3, temp_slry_rate);
 			break;
 		}
 		case 4: {
@@ -233,7 +267,11 @@ void Director::hire_employers()
 			if (electrician.ch_birthday()) break;
 			if (electrician.ch_category()) break;
 
+			double temp_slry_rate = salary_rate_input();
+			if (temp_slry_rate == DBL_MIN) break;
+
 			electricians->push_back(electrician);
+			accountant->salary_rate_add(4, temp_slry_rate);
 			break;
 		}
 		case -1:

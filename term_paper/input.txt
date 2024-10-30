@@ -1,19 +1,21 @@
 //Director; Имя, Фамилия, Отчество; dd.mm.yyyy; Название_компании;
 //Secretary; Имя, Фамилия, Отчество; dd.mm.yyyy; Язык1, Язык2, ... ЯзыкN;
-//Accountant; Имя, Фамилия, Отчество; dd.mm.yyyy; base1, base2, base3, base4, base5; rate1; rate2; rate3; rate4; rate5;
+//Accountant; Имя, Фамилия, Отчество; dd.mm.yyyy; base1, base2, base3, base4, base5;
 //Electrician; Имя, Фамилия, Отчество; dd.mm.yyyy; Разряд(1;6);
 //Guard; Имя, Фамилия, Отчество; dd.mm.yyyy; special_tool; shift(1;3);
+//Rates; Director_rate; Accountant_rate; Secretary_rate; Guard_rate1/ .../ Guard_rateN; Electrician_rate1/ .../ Electrician_rateN;
 
 Director; Igor, Peganov, Nikolaevich; 23.07.2005; KLHZ inc.;
-Accountant; Gocha, Chivchyan, Georgievich; 12.04.1984; 500, 400, 300, 200, 100; 1; 2,3; 4,4; 0,2; 3;
+Accountant; Gocha, Chivchyan, Georgievich; 12.04.1984; 500000, 400000, 100000, 75000, 66000;
 Secretary; Arkadiy, Tsaregratsev, Petrovich; 05.12.1982; Russian, English, Japanese;
 Guard; Alexandr, Alexandrov, Alexandrovich; 12.12.1998; Pistol; 1;
 Guard; Oleg, Musorgskiy, Olegovich; 11.11.1980; Stick; 2;
 Guard; Tim, Berton, Nikolaevich; 24.06.1978; Shocker; 3;
 Electrician; Kim, Chen, In; 21.12.2003; 6;
 Electrician; Kim, Ir, Sen; 12.11.1965; 3;
+Rates; 1; 1; 1; 0,8/ 0,9/ 1; 0,5/ 0,75;
 Director; Darya, Andreeva, Alekseevna; 09.02.2005; Sosiska;
-Accountant; Michael, Jackson, Josef; 13.05.1956; 10000, 2000, 3000, 4000, 5000; 10; 1; 1; 2; 3;
+Accountant; Michael, Jackson, Josef; 13.05.1956; 400000, 200000, 120000, 40000, 50000;
 Secretary; Alexandr, Pushkin, Sergeevich; 06.06.1999; Russian, France;
 Guard; Vincent, Van Gog, Villem; 15.09.1967; Glock; 1;
 Guard; Martin, Luter King jr.,  ; 12.03.1954; Canon; 2;
@@ -22,4 +24,5 @@ Electrician; Vitaliy, Karnakov, Evgenievich; 21.12.2005; 6;
 Electrician; Iosif, Jugashvili, Vissarionocich; 04.07.1901; 3;
 Electrician; Albert, Enshtein, Germanovich; 14.03.1879; 5;
 Electrician; Nikola, Tesla,  ; 10.07.1856; 6;
+Rates; 1; 1; 1; 0,8/ 0,6/ 0,7; 0,7/ 0,9/ 1/ 0,65;
 

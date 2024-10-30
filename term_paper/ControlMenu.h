@@ -1,5 +1,10 @@
 #pragma once
 #include "Includes.h"
+#include "Director.h"
+#include "Accountant.h"
+#include "Secretary.h"
+#include "Guard.h"
+#include "Electrician.h"
 
 class ControlMenu
 {
@@ -37,9 +42,6 @@ class ControlMenu
 
 	//Выводит директора и название компании под номером num
 	inline void print_company(int num);
-
-	//salary update from accountant to all employers
-	void salary_update(std::vector<Electrician>** electricians, std::vector<Guard>** guards, Secretary** secretary, Director** director, Accountant** accountant);
 
 	void print_salary(Director*);
 	void print_salary(Accountant*);

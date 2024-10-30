@@ -76,6 +76,8 @@ void ControlMenu::read_from_file(){
     }
     fclose(file);
 
+    int director_num = 0;
+
     for (std::string str : input_vector) {
         if (str.size() > 2 and str[0] == '/' and str[1] == '/') continue; //skip comments
         
@@ -116,7 +118,6 @@ void ControlMenu::read_from_file(){
             std::array<int, 3> birthday; std::string str_date;
             std::string cmpny_name;
             std::array<int, 5> base_slry;
-            std::array<double, 5> slry_rate;
             for (int i = 0; i < 3; i++) {
                 n += 2;
                 for (n; n < str.size(); n++) {
@@ -139,16 +140,7 @@ void ControlMenu::read_from_file(){
                 }
                 base_slry[i] = std::stoi(temp);
             }
-            for (int i = 0; i < 5; i++) {
-                n += 2;
-                std::string temp;
-                for (n; n < str.size(); n++) {
-                    if (str[n] == ';') break;
-                    temp.push_back(str[n]);
-                }
-                slry_rate[i] = std::stod(temp);
-            }
-            Accountant accountant(full_name, birthday, base_slry, slry_rate);
+            Accountant accountant(full_name, birthday, base_slry);
             directors_n_companies.back()->hire_employers(accountant);
         }
         else if (job == "Secretary") {
@@ -240,17 +232,74 @@ void ControlMenu::read_from_file(){
             Electrician electrician(full_name, birthday, cat);
             directors_n_companies.back()->hire_employers(electrician);
         }
+        else if (job == "Rates") {
+            director = directors_n_companies.back();
+
+            Accountant* accountant = NULL;
+            Secretary* secretary = NULL;
+            std::vector<Guard>* guards = NULL;
+            std::vector<Electrician>* electricians = NULL;
+
+            director->get_pnts(&accountant, &secretary, &guards, &electricians);
+            if (accountant) accountant->pnt_initialization(director, secretary, guards, electricians);
+
+            std::string temp_rate_str;
+            n += 2;
+            for (n; n < str.size(); n++) {
+                if (str[n] == ';') break;
+                temp_rate_str.push_back(str[n]);
+            }
+            accountant->salary_rate_add(0, std::stod(temp_rate_str), 0);
+            temp_rate_str = "";
+            n += 2;
+            for (n; n < str.size(); n++) {
+                if (str[n] == ';') break;
+                temp_rate_str.push_back(str[n]);
+            }
+            accountant->salary_rate_add(1, std::stod(temp_rate_str), 0);
+            temp_rate_str = "";
+            n += 2;
+            for (n; n < str.size(); n++) {
+                if (str[n] == ';') break;
+                temp_rate_str.push_back(str[n]);
+            }
+            accountant->salary_rate_add(2, std::stod(temp_rate_str), 0);
+
+            n += 2;
+            bool flag = true;
+            while (flag) {
+                temp_rate_str = "";
+                for (n; n < str.size(); n++) {
+                    if (str[n] == '/' or str[n] == ';') {
+                        if (str[n] == ';') flag = false;
+                        break;
+                    }
+                    temp_rate_str.push_back(str[n]);
+                }
+                n += 2;
+                accountant->salary_rate_add(3, std::stod(temp_rate_str), 0);
+            }
+
+            flag = true;
+            while (flag) {
+                temp_rate_str = "";
+                for (n; n < str.size(); n++) {
+                    if (str[n] == '/' or str[n] == ';') {
+                        if (str[n] == ';') flag = false;
+                        break;
+                    }
+                    temp_rate_str.push_back(str[n]);
+                }
+                n += 2;
+                accountant->salary_rate_add(4, std::stod(temp_rate_str), 0);
+            }
+            accountant->update_salaries();
+        }
     }
     read_flag = 1;
 
     for (Director* director : directors_n_companies) {
-        Accountant* accountant = NULL;
-        Secretary* secretary = NULL;
-        std::vector<Guard>* guards = NULL;
-        std::vector<Electrician>* electricians = NULL;
 
-        director->get_pnts(&accountant, &secretary, &guards, &electricians);
-        if (accountant) salary_update(&electricians, &guards, &secretary, &director, &accountant);
     }
 
     std::cout << "Чтение с файла успешно" << std::endl;
@@ -348,7 +397,7 @@ void ControlMenu::start() {
                 case 1:
                 {
                     //director
-                    director_menu();
+                    if (director_menu()) flag2 = false;
                     break;
                 }
                 case 2:
@@ -415,21 +464,6 @@ void ControlMenu::start() {
     }
 }   
 
-void ControlMenu::salary_update(std::vector<Electrician>** electricians, std::vector<Guard>** guards, Secretary** secretary, Director** director, Accountant** accountant) 
-{
-    std::array<int, 5> base = (*accountant)->get_base_salary();
-    std::array<double, 5> rate = (*accountant)->get_salary_rate();
-    std::array<double, 5> salary{ base[0] * rate[0], base[1] * rate[1], base[2] * rate[2], base[3] * rate[3], base[4] * rate[4] };
-    /*Base salaries
-    0 - Director, 1 - Accountant, 2 - Secretary, 3 - Security, 4 - Electrician*/
-    (*director)->ch_salary(salary[0]);
-    (*accountant)->ch_salary(salary[1]);
-    if (*secretary) (*secretary)->ch_salary(salary[2]);
-    for (int i = 0; i < (*guards)->size(); i++) (**guards)[i].ch_salary(salary[3]);
-    for (int i = 0; i < (*electricians)->size(); i++) (**electricians)[i].ch_salary(salary[3]);
-    return;
-}
-
 bool ControlMenu::create_new_cmpny() {
     Director* new_director = new Director({ " ", " ", " " }, { 1, 1, 1 }, "Kontora");
     if (new_director->change_company_name()) return 1;
@@ -469,7 +503,6 @@ bool ControlMenu::director_menu() {
         case 3:
             director->hire_employers();
             director->get_pnts(&accountant, &secretary, &guards, &electricians);
-            if (accountant) salary_update(&electricians, &guards, &secretary, &director, &accountant);
             //system("pause");
             break;
         case 4:
@@ -499,10 +532,11 @@ bool ControlMenu::director_menu() {
             flag3 = false;
             delete directors_n_companies[choice];
             directors_n_companies.erase(directors_n_companies.begin() + choice);
+            return 1;
             break;
         case -1:
             flag3 = false;
-            return 1;
+            return 0;
             break;
         default:
             break;
@@ -571,16 +605,13 @@ bool ControlMenu::accountant_menu() {
         {
         case 1:
             accountant->ch_base_salary();
-            salary_update(&electricians, &guards, &secretary, &director, &accountant);
+            
             break;
         case 2:
-            accountant->ch_salary_rate();
-            salary_update(&electricians, &guards, &secretary, &director, &accountant);
+            accountant->ch_salary_rates();
             break;
         case 3: {
-            int secret;
-            secretary ? secret = 1 : secret = 0;
-            double avg_slry = accountant->average_salary(guards->size(), electricians->size(), secret);
+            double avg_slry = accountant->average_salary();
             std::cout << "Средняя зарплата: " << avg_slry << std::endl;
             system("pause");
             break;

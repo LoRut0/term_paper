@@ -10,7 +10,6 @@ bool Guard::ch_name()
 	full_name[0] = temp;
 	return 0;
 };
-
 bool  Guard::ch_surname()
 {
 	std::cout << "¬ведите фамилию: ";
@@ -19,7 +18,6 @@ bool  Guard::ch_surname()
 	full_name[1] = temp;
 	return 0;
 };
-
 bool Guard::ch_patronymic()
 {
 	std::cout << "¬ведите отчество: ";
@@ -28,19 +26,16 @@ bool Guard::ch_patronymic()
 	full_name[2] = temp;
 	return 0;
 };
-
-void Guard::ch_salary(double slry)
-{
-	salary = slry;
-};
-
-
 std::array<std::string, 3> Guard::get_fullname()
 {
 	return full_name;
 };
 
-int Guard::get_salary()
+void Guard::ch_salary(double slry)
+{
+	salary = slry;
+};
+double Guard::get_salary()
 {
 	return salary;
 };
@@ -70,7 +65,6 @@ bool Guard::ch_birthday()
 	birthday[2] = std::stoi(date[2]);
 	return 0;
 };
-
 std::array<int, 3> Guard::get_birthday()
 {
 	return birthday;
@@ -98,11 +92,6 @@ Guard::Guard()
 
 //base
 
-
-std::string Guard::get_weapon() {
-	return weapon;
-}
-
 bool Guard::ch_weapon() {
 	std::cout << "¬ведите спец. средство охранника: ";
 	std::string new_weapon = Input::str(25);
@@ -110,9 +99,8 @@ bool Guard::ch_weapon() {
 	weapon = new_weapon;
 	return 0;
 }
-
-int Guard::get_shift() {
-	return shift;
+std::string Guard::get_weapon() {
+	return weapon;
 }
 
 bool Guard::ch_shift() {
@@ -121,4 +109,7 @@ bool Guard::ch_shift() {
 	if (new_shift == INT_MIN) return 1;
 	shift = new_shift;
 	return 0;
+}
+int Guard::get_shift() {
+	return shift;
 }

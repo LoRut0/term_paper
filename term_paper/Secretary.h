@@ -1,8 +1,9 @@
 #pragma once
 #include "Employee.h"
-#include "Guard.h"
-#include "Electrician.h"
-#include "Accountant.h"
+
+class Electrician;
+class Guard;
+class Accountant;
 
 class Secretary :
     public Employee
@@ -10,11 +11,9 @@ class Secretary :
     //Full Name
     std::array<std::string, 3> full_name;
     //Salary
-    int salary;
+    double salary;
     //Birthday
     std::array<int, 3> birthday;
-    //Rate of salary
-    double salary_rate;
 
     //Languages known by Secretary
     std::vector<std::string> languages;
@@ -24,7 +23,7 @@ class Secretary :
     //pointer to vector with guards
     std::vector<Guard>* guards;
     //pointer to Accountant
-    Accountant* accountant;
+    Accountant** accountant;
 
 public:
 //BASE
@@ -38,8 +37,6 @@ public:
 
     //change salary
     void ch_salary(double slry) override;
-    //change Rate of salary
-    bool ch_salary_rate(double slry_rate) override;
 
     //Change bitrthday format(dd.mm.yyyy)
     bool ch_birthday() override;
@@ -50,9 +47,7 @@ public:
     std::array<std::string, 3> get_fullname() override;
 
     //get salary
-    int get_salary() override;
-    //get rate of salary
-    double get_salary_rate() override;
+    double get_salary() override;
 
     //get birthday (tm struct)
     std::array<int, 3> get_birthday() override;
@@ -60,6 +55,7 @@ public:
 
     Secretary(std::array<std::string, 3> full_name, std::array<int, 3> birthday, std::vector<std::string> langs);
     Secretary();
+    ~Secretary();
 //BASE
     
     //print languages

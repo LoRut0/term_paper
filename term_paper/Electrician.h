@@ -7,7 +7,7 @@ class Electrician :
     //Full Name
     std::array<std::string, 3> full_name;
     //Salary
-    int salary;
+    double salary;
     //Birthday
     std::array<int, 3> birthday;
     //Rate of salary
@@ -27,8 +27,6 @@ public:
 
     //change salary
     void ch_salary(double slry) override;
-    //change Rate of salary
-    bool ch_salary_rate(double slry_rate) override;
 
     //Change bitrthday format(dd.mm.yyyy)
     bool ch_birthday() override;
@@ -39,9 +37,7 @@ public:
     std::array<std::string, 3> get_fullname() override;
 
     //get salary
-    int get_salary() override;
-    //get rate of salary
-    double get_salary_rate() override;
+    double get_salary() override;
 
     //get birthday (tm struct)
     std::array<int, 3> get_birthday() override;

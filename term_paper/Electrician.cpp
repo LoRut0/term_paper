@@ -10,7 +10,6 @@ bool Electrician::ch_name()
 	full_name[0] = temp;
 	return 0;
 };
-
 bool  Electrician::ch_surname()
 {
 	std::cout << "¬ведите фамилию: ";
@@ -19,7 +18,6 @@ bool  Electrician::ch_surname()
 	full_name[1] = temp;
 	return 0;
 };
-
 bool Electrician::ch_patronymic()
 {
 	std::cout << "¬ведите отчество: ";
@@ -28,19 +26,16 @@ bool Electrician::ch_patronymic()
 	full_name[2] = temp;
 	return 0;
 };
-
-void Electrician::ch_salary(double slry)
-{
-	salary = slry;
-};
-
-
 std::array<std::string, 3> Electrician::get_fullname()
 {
 	return full_name;
 };
 
-int Electrician::get_salary()
+void Electrician::ch_salary(double slry)
+{
+	salary = slry;
+};
+double Electrician::get_salary()
 {
 	return salary;
 };
@@ -76,14 +71,9 @@ std::array<int, 3> Electrician::get_birthday()
 	return birthday;
 };
 
-Electrician::Electrician(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, int cat)
+Electrician::Electrician(std::array<std::string, 3> full_name, std::array<int, 3> input_birthday, int cat) : 
+	full_name(full_name), salary(1), salary_rate(1), birthday(input_birthday), category(cat) 
 {
-	this->full_name = full_name;
-	salary = 1;
-
-	birthday = input_birthday;
-	category = cat;
-	//height_cat = 0;
 };
 
 Electrician::Electrician()
@@ -92,6 +82,7 @@ Electrician::Electrician()
 	full_name[1] = "surname";
 	full_name[2] = "patronymic";
 	salary = -1;
+	salary_rate = -1;
 
 	birthday = { 0,0,0 };
 	category = 0;

@@ -1,13 +1,14 @@
-//director.h
+//Director.h
 
 #pragma once
-
 #include "Includes.h"
-#include "Electrician.h"
-#include "Guard.h"
-#include "Secretary.h"
+#include "Employee.h"
 #include "Accountant.h"
-#include "inputlib.h"
+
+//class Accountant;
+class Secretary;
+class Guard;
+class Electrician;
 
 class Director : 
 	public Employee 
@@ -15,7 +16,7 @@ class Director :
 	//Full Name
 	std::array<std::string, 3> full_name;
 	//Salary
-	int salary;
+	double salary;
 	//Birthday
 	std::array<int, 3> birthday;
 	//Rate of salary
@@ -30,8 +31,15 @@ class Director :
 	//pointer to Accountant
 	Accountant* accountant;
 
+	//temporary accountant
+	//needed when accountant is fired, so salary_rates and base_salaries wont delete
+	Accountant temp_accountant;
+
 	//company name
 	std::string company_name;
+	
+	//request for salary_rate input
+	double salary_rate_input();
 
 public:
 //BASE
@@ -45,8 +53,6 @@ public:
 
 	//change salary
 	void ch_salary(double slry) override;
-	//change Rate of salary
-	bool ch_salary_rate(double slry_rate) override;
 
 	//Change bitrthday format(dd.mm.yyyy)
 	bool ch_birthday() override;
@@ -57,9 +63,7 @@ public:
 	std::array<std::string, 3> get_fullname() override;
 
 	//get salary
-	int get_salary() override;
-	//get rate of salary
-	double get_salary_rate() override;
+	double get_salary() override;
 
 	//get birthday (tm struct)
 	std::array<int, 3> get_birthday() override;
@@ -86,6 +90,7 @@ public:
 	void hire_employers(Guard emp);
 	void hire_employers(Electrician emp);
 
+	//getting pointers from director to control_menu
 	void get_pnts(Accountant** accountant_, Secretary** secretary_, std::vector<Guard>** guard_vec, std::vector<Electrician>** electrician_vec);
 
 	//get company name

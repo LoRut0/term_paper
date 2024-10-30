@@ -1,5 +1,8 @@
 #include "Secretary.h"
 #include <iomanip>
+#include "Guard.h"
+#include "Electrician.h"
+#include "Accountant.h"
 
 //base
 bool Secretary::ch_name()
@@ -10,7 +13,6 @@ bool Secretary::ch_name()
 	full_name[0] = temp;
 	return 0;
 };
-
 bool  Secretary::ch_surname()
 {
 	std::cout << "Введите фамилию: ";
@@ -19,7 +21,6 @@ bool  Secretary::ch_surname()
 	full_name[1] = temp;
 	return 0;
 };
-
 bool Secretary::ch_patronymic()
 {
 	std::cout << "Введите отчество: ";
@@ -28,29 +29,20 @@ bool Secretary::ch_patronymic()
 	full_name[2] = temp;
 	return 0;
 };
-
-void Secretary::ch_salary(double slry)
-{
-	salary = slry;
-};
-
 std::array<std::string, 3> Secretary::get_fullname()
 {
 	return full_name;
 };
 
-int Secretary::get_salary()
+void Secretary::ch_salary(double slry)
+{
+	salary = slry;
+};
+double Secretary::get_salary()
 {
 	return salary;
 };
 
-bool Secretary::ch_salary_rate(double slry_rate) {
-	std::cout << "Введите ставку: ";
-	double temp = Input::double_(0.01, 1, 2);
-	if (temp == DBL_MIN) return 1;
-	salary_rate = temp;
-	return 0;
-}
 
 bool Secretary::ch_birthday()
 {
@@ -77,38 +69,31 @@ bool Secretary::ch_birthday()
 	birthday[2] = std::stoi(date[2]);
 	return 0;
 };
-
 std::array<int, 3> Secretary::get_birthday()
 {
 	return birthday;
 };
 
-Secretary::Secretary(std::array<std::string, 3> full_name, std::array<int, 3> birthday, std::vector<std::string> langs)
+Secretary::Secretary(std::array<std::string, 3> full_name, std::array<int, 3> birthday, std::vector<std::string> langs) :
+	full_name(full_name), salary(1), languages(langs), birthday(birthday)
 {
-	this->full_name = full_name;
-	salary = 1;
-	
-	languages = langs;
-	this->birthday = birthday;
+	guards = NULL;
+	electricians = NULL;
+	accountant = NULL;
 };
-
-Secretary::Secretary()
+Secretary::Secretary() : full_name({ "name", "surname", "patronymic" }), salary(1), birthday({0,0,0})
 {
-	full_name[0] = "name";
-	full_name[1] = "surname";
-	full_name[2] = "patronymic";
-	salary = -1;
-
-	birthday = { 0,0,0 };
+	guards = NULL;
+	electricians = NULL;
+	accountant = NULL;
 };
-//base
-
-void Secretary::print_languages() {
-	int iter = 1;
-	for (std::string& language : languages) {
-		std::cout << iter++ << " " << language << std::endl;
-	}
+Secretary::~Secretary() {
+	//if (*accountant) delete* accountant;
+	accountant = NULL;
+	delete accountant;
+	accountant = NULL;
 }
+//base
 
 void Secretary::change_languages() {
 	bool flag = true;
@@ -158,19 +143,25 @@ void Secretary::change_languages() {
 		}
 	}
 }
+void Secretary::print_languages() {
+	int iter = 1;
+	for (std::string& language : languages) {
+		std::cout << iter++ << " " << language << std::endl;
+	}
+}
 
 void Secretary::print_employers() {
 	//Accountant
-	if (accountant) {
+	if (*accountant) {
 		std::cout << "+-----------------------------+-----------------------------+-----------------------------+-----------------+--------------+" << std::endl;
 		std::cout << "|                                                          Бухгалтер                                                       |" << std::endl;
 		std::cout << "+-----------------------------+-----------------------------+-----------------------------+-----------------+--------------+" << std::endl;
 		std::cout << std::setfill(' ') << std::left << std::setw(30) << "| Имя " << std::setw(30) << "| Фамилия " << std::setw(30) << "| Отчество" <<
 			std::setw(16) << "| День рождения " << std::setw(17) << "| Зарплата (руб)" << std::setw(1) << '|' << std::endl;
 		std::cout << "+-----------------------------+-----------------------------+-----------------------------+-----------------+--------------+" << std::endl;
-		std::array<std::string, 3> full_name = accountant->get_fullname();
-		std::array<int, 3> birthday = accountant->get_birthday();
-		int salary = accountant->get_salary();
+		std::array<std::string, 3> full_name = (*accountant)->get_fullname();
+		std::array<int, 3> birthday = (*accountant)->get_birthday();
+		int salary = (*accountant)->get_salary();
 		std::cout << "| " << std::setw(28) << full_name[0] << "| " << std::setw(28) << full_name[1] << "| " << std::setw(28) << full_name[2] << "| " <<
 			std::right << std::setfill('0') << std::setw(2) << birthday[0] << '.' << std::setw(2) << birthday[1] << '.' << std::setw(2) << birthday[2] <<
 			std::left << std::setfill(' ') << "    | " << std::setw(15) << salary << '|' << std::endl;
@@ -277,6 +268,7 @@ void Secretary::print_electricians() {
 void Secretary::pnt_initialization(std::vector<Electrician>* electricians, std::vector<Guard>* guards, Accountant* accountant) {
 	this->electricians = electricians;
 	this->guards = guards;
-	this->accountant = accountant;
+	this->accountant = new Accountant*;
+	*(this->accountant) = accountant;
 	return;
 }
